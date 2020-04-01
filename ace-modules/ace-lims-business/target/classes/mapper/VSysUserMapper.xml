@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sibo.lims.business.mapper.VSysUserMapper">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.sibo.lims.business.entity.VSysUser" id="vSysUserMap">
+        <result property="id" column="ID"/>
+        <result property="address" column="ADDRESS"/>
+        <result property="birthday" column="BIRTHDAY"/>
+        <result property="credentialsNo" column="CREDENTIALS_NO"/>
+        <result property="credentialsType" column="CREDENTIALS_TYPE"/>
+        <result property="duty" column="DUTY"/>
+        <result property="education" column="EDUCATION"/>
+        <result property="email" column="EMAIL"/>
+        <result property="mobile" column="MOBILE"/>
+        <result property="name" column="NAME"/>
+        <result property="nation" column="NATION"/>
+        <result property="no" column="NO"/>
+        <result property="photo" column="PHOTO"/>
+        <result property="profession" column="PROFESSION"/>
+        <result property="remark" column="REMARK"/>
+        <result property="sex" column="SEX"/>
+        <result property="status" column="STATUS"/>
+        <result property="techTitle" column="TECH_TITLE"/>
+        <result property="telephone" column="TELEPHONE"/>
+        <result property="workDate" column="WORK_DATE"/>
+        <result property="duties" column="DUTIES"/>
+        <result property="deviceId" column="DEVICE_ID"/>
+        <result property="testGroup" column="TEST_GROUP"/>
+        <result property="uKeyId" column="U_KEY_ID"/>
+        <result property="createTime" column="CREATE_TIME"/>
+        <result property="isDel" column="IS_DEL"/>
+        <result property="lastUpdTime" column="LAST_UPD_TIME"/>
+        <result property="sort" column="SORT"/>
+        <result property="version" column="VERSION"/>
+    </resultMap>
+
+</mapper>

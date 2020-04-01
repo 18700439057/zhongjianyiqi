@@ -1,0 +1,17 @@
+package ${package}.mapper;
+
+import ${package}.entity.${className};
+import com.github.wxiaoqi.security.common.mapper.CommonMapper;
+import org.springframework.stereotype.Repository;
+
+/**
+ * ${comments}
+ * 
+ * @author ${author}
+ * @email ${email}
+ * @version ${datetime}
+ */
+@Repository
+public interface ${className}Mapper extends CommonMapper<${className}> {
+	
+}

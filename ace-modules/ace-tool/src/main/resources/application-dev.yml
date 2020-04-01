@@ -1,0 +1,28 @@
+
+eureka:
+    instance:
+        statusPageUrlPath: /info
+        healthCheckUrlPath: /health
+        # docker 部署开启,记得将IP修改为部署所在服务器的外网IP
+        prefer-ip-address: true
+        ip-address: 10.10.10.10
+    client:
+        serviceUrl:
+          defaultZone: http://10.10.10.202:8761/eureka/
+                    # docker 部署开启,记得将IP修改为部署所在服务器的外网IP
+  #            defaultZone: http://${EUREKA_HOST:localhost}:${EUREKA_PORT:8761}/eureka/
+# 具体看类:CloudStorageConfig
+oss:
+  type: 1 # 类型 1：七牛  2：阿里云  3：腾讯云
+  qiniuDomain: http://ofsc32t59.bkt.clouddn.com
+  qiniuPrefix: oss
+  qiniuAccessKey: FAvmtRaY_yUC6Taj0b3sM8k2Wa6BDOUBy3KVBdT_
+  qiniuSecretKey: a0P8OtyJv7weu7_z9YtXzplfcIzKtcHR2da_qemk
+  qiniuBucketName: image
+
+search:
+  lucence:
+    path: ./lucence/file
+
+file:
+    uploadPath: F:/springCloud/fileUpload/

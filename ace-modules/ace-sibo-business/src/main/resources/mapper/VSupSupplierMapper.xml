@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sibo.business.mapper.VSupSupplierMapper">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap id="BaseResultMap" type="com.sibo.business.entity.VSupSupplier">
+        <id column="id" jdbcType="VARCHAR" property="id" />
+        <result column="crt_user_name" jdbcType="VARCHAR" property="crtUserName" />
+        <result column="crt_user_id" jdbcType="VARCHAR" property="crtUserId" />
+        <result column="crt_time" jdbcType="TIMESTAMP" property="crtTime" />
+        <result column="upd_user_name" jdbcType="VARCHAR" property="updUserName" />
+        <result column="upd_user_id" jdbcType="VARCHAR" property="updUserId" />
+        <result column="upd_time" jdbcType="TIMESTAMP" property="updTime" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="address" jdbcType="VARCHAR" property="address" />
+        <result column="linkman" jdbcType="VARCHAR" property="linkman" />
+        <result column="phone" jdbcType="VARCHAR" property="phone" />
+        <result column="line_of_business" jdbcType="VARCHAR" property="lineOfBusiness" />
+        <result column="image" jdbcType="VARCHAR" property="image" />
+        <result column="classify" jdbcType="VARCHAR" property="classify" />
+    </resultMap>
+
+    <!--<insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.sibo.business.entity.VSupSupplier" useGeneratedKeys="true">-->
+        <!--insert into v_sup_supplier-->
+        <!--<trim prefix="(" suffix=")" suffixOverrides=",">-->
+            <!--<if test="createName != null">-->
+                <!--create_name,-->
+            <!--</if>-->
+            <!--<if test="createDate != null">-->
+                <!--create_date,-->
+            <!--</if>-->
+            <!--<if test="updateName != null">-->
+                <!--update_name,-->
+            <!--</if>-->
+            <!--<if test="updateDate != null">-->
+                <!--update_date,-->
+            <!--</if>-->
+            <!--<if test="name != null">-->
+                <!--`name`,-->
+            <!--</if>-->
+            <!--<if test="address != null">-->
+                <!--address,-->
+            <!--</if>-->
+            <!--<if test="linkman != null">-->
+                <!--linkman,-->
+            <!--</if>-->
+            <!--<if test="phone != null">-->
+                <!--phone,-->
+            <!--</if>-->
+            <!--<if test="lineOfBusiness != null">-->
+                <!--line_of_business,-->
+            <!--</if>-->
+            <!--<if test="image != null">-->
+                <!--image,-->
+            <!--</if>-->
+            <!--<if test="classify != null">-->
+                <!--classify,-->
+            <!--</if>-->
+        <!--</trim>-->
+        <!--<trim prefix="values (" suffix=")" suffixOverrides=",">-->
+            <!--<if test="createName != null">-->
+                <!--#{createName,jdbcType=VARCHAR},-->
+            <!--</if>-->
+            <!--<if test="createDate != null">-->
+                <!--#{createDate,jdbcType=TIMESTAMP},-->
+            <!--</if>-->
+            <!--<if test="updateName != null">-->
+                <!--#{updateName,jdbcType=VARCHAR},-->
+            <!--</if>-->
+            <!--<if test="updateDate != null">-->
+                <!--#{updateDate,jdbcType=TIMESTAMP},-->
+            <!--</if>-->
+            <!--<if test="name != null">-->
+                <!--#{name,jdbcType=VARCHAR},-->
+            <!--</if>-->
+            <!--<if test="address != null">-->
+                <!--#{address,jdbcType=VARCHAR},-->
+            <!--</if>-->
+            <!--<if test="linkman != null">-->
+                <!--#{linkman,jdbcType=VARCHAR},-->
+            <!--</if>-->
+            <!--<if test="phone != null">-->
+                <!--#{phone,jdbcType=VARCHAR},-->
+            <!--</if>-->
+            <!--<if test="lineOfBusiness != null">-->
+                <!--#{lineOfBusiness,jdbcType=VARCHAR},-->
+            <!--</if>-->
+            <!--<if test="image != null">-->
+                <!--#{image,jdbcType=VARCHAR},-->
+            <!--</if>-->
+            <!--<if test="classify != null">-->
+                <!--#{classify,jdbcType=VARCHAR},-->
+            <!--</if>-->
+        <!--</trim>-->
+    <!--</insert>-->
+
+
+
+</mapper>

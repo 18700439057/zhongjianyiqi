@@ -1,0 +1,35 @@
+
+
+server:
+    port: 9999
+
+spring:
+    profiles:
+        active: dev
+# 配置数据库
+mybatis:
+    mapper-locations: "classpath*:mapper/*.xml"
+
+# 配置swagger
+swagger:
+    enabled: true
+    base-package: com.sibo.lims.business
+    title: ace-lims-business
+    version: 1.0.0.SNAPSHOT
+    description: lims调用服务
+    contact:
+        name: admin
+
+# 配置用户认证和服务认证信息
+auth:
+  serviceId: ace-auth
+  user:
+    token-header: Authorization
+    limit-expire: 1440 # 一天过去,单位分钟
+  client:
+    id: ace-lims-business
+    secret: 123456
+    token-header: client-token
+    
+mapper:
+  mappers: com.github.wxiaoqi.security.common.mapper.CommonMapper

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sibo.business.mapper.VCostRecordMapper">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.sibo.business.entity.VCostRecord" id="vCostRecordMap">
+        <result property="id" column="ID"/>
+        <result property="devicename" column="DEVICENAME"/>
+        <result property="maintenanceType" column="MAINTENANCE_TYPE"/>
+        <result property="equipmentNumber" column="EQUIPMENT_NUMBER"/>
+        <result property="errorDescription" column="ERROR_DESCRIPTION"/>
+        <result property="maintenanceMode" column="MAINTENANCE_MODE"/>
+        <result property="department" column="DEPARTMENT"/>
+        <result property="waiterUseTime" column="WAITER_USE_TIME"/>
+        <result property="changeAccessory" column="CHANGE_ACCESSORY"/>
+        <result property="costEstimate" column="COST_ESTIMATE"/>
+        <result property="maintenanceNumberPeople" column="MAINTENANCE_NUMBER_PEOPLE"/>
+        <result property="crtUserName" column="CRT_USER_NAME"/>
+        <result property="crtUserId" column="CRT_USER_ID"/>
+        <result property="crtTime" column="CRT_TIME"/>
+        <result property="updUserName" column="UPD_USER_NAME"/>
+        <result property="updUserId" column="UPD_USER_ID"/>
+        <result property="updTime" column="UPD_TIME"/>
+        <result property="type" column="TYPE"/>
+        <result property="costCategory" column="COST_CATEGORY"/>
+    </resultMap>
+
+    <select id="selectCurrentyearList" resultMap="vCostRecordMap"  parameterType="java.lang.String">
+        SELECT
+            * FROM V_COST_RECORD v
+        WHERE
+            TO_NUMBER (TO_CHAR(v.CRT_TIME, 'YYYY')) =#{year}
+    </select>
+
+</mapper>

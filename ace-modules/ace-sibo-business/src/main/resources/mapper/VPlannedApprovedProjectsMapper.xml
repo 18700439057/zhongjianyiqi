@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sibo.business.mapper.VPlannedApprovedProjectsMapper">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.sibo.business.entity.VPlannedApprovedProjects" id="vPlannedApprovedProjectsMap">
+        <result property="id" column="ID"/>
+        <result property="assetId" column="ASSET_ID"/>
+        <result property="measuringProject" column="MEASURING_PROJECT"/>
+        <result property="latestCalibrationDate" column="LATEST_CALIBRATION_DATE"/>
+        <result property="verificationPeriod" column="VERIFICATION_PERIOD"/>
+        <result property="validityMeasurement" column="VALIDITY_MEASUREMENT"/>
+        <result property="testUnit" column="TEST_UNIT"/>
+        <result property="verificationGistName" column="VERIFICATION_GIST_NAME"/>
+        <result property="calibrationResult" column="CALIBRATION_RESULT"/>
+        <result property="testCost" column="TEST_COST"/>
+        <result property="certificateNumber" column="CERTIFICATE_NUMBER"/>
+        <result property="measueementStatus" column="MEASUEEMENT_STATUS"/>
+        <result property="lossCriticalBasis" column="LOSS_CRITICAL_BASIS"/>
+        <result property="legalValue" column="LEGAL_VALUE"/>
+        <result property="standardLimit" column="STANDARD_LIMIT"/>
+        <result property="verificationGistCode" column="VERIFICATION_GIST_CODE"/>
+        <result property="specificationModel" column="SPECIFICATION_MODEL"/>
+        <result property="measurementRange" column="MEASUREMENT_RANGE"/>
+        <result property="checkCurrentStatus" column="CHECK_CURRENT_STATUS"/>
+        <result property="type" column="TYPE"/>
+        <result property="crtUserName" column="CRT_USER_NAME"/>
+        <result property="crtUserId" column="CRT_USER_ID"/>
+        <result property="crtTime" column="CRT_TIME"/>
+        <result property="updUserName" column="UPD_USER_NAME"/>
+        <result property="updUserId" column="UPD_USER_ID"/>
+        <result property="updTime" column="UPD_TIME"/>
+        <result property="precision" column="PRECISION"/>
+    </resultMap>
+
+</mapper>

@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sibo.business.mapper.VAssetsChangeRecordsMapper">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.sibo.business.vo.VAssetsChangeRecordsVo" id="vAssetsChangeRecordsMap">
+        <result property="id" column="ID"/>
+        <result property="assetsId" column="ASSETS_ID"/>
+        <result property="assetsStatus" column="ASSETS_STATUS"/>
+        <result property="crtUserName" column="CRT_USER_NAME"/>
+        <result property="crtUserId" column="CRT_USER_ID"/>
+        <result property="crtTime" column="CRT_TIME"/>
+        <result property="updUserName" column="UPD_USER_NAME"/>
+        <result property="updUserId" column="UPD_USER_ID"/>
+        <result property="updTime" column="UPD_TIME"/>
+        <result property="unifiedCode" column="UNIFIED_CODE"/>
+        <result property="devicename" column="DEVICENAME"/>
+        <result property="unitType" column="UNIT_TYPE"/>
+        <result property="measurementRange" column="MEASUREMENT_RANGE"/>
+        <result property="originalValue" column="ORIGINAL_VALUE"/>
+        <result property="grade" column="GRADE"/>
+        <result property="taxRate" column="TAX_RATE"/>
+        <result property="afterTaxPrice" column="AFTER_TAX_PRICE"/>
+        <result property="assetsClass" column="ASSETS_CLASS"/>
+        <result property="measurementCheckClass" column="MEASUREMENT_CHECK_CLASS"/>
+        <result property="facitityCategory" column="FACITITY_CATEGORY"/>
+        <result property="installedCapacity" column="INSTALLED_CAPACITY"/>
+        <result property="deliveryTime" column="DELIVERY_TIME"/>
+        <result property="usesTime" column="USES_TIME"/>
+        <result property="facitityStatus" column="FACITITY_STATUS"/>
+        <result property="facilityDesignatedArea" column="FACILITY_DESIGNATED_AREA"/>
+        <result property="manufacturer" column="MANUFACTURER"/>
+        <result property="principal" column="PRINCIPAL"/>
+        <result property="equipmentSubordinate" column="EQUIPMENT_SUBORDINATE"/>
+        <result property="equipmentOwner" column="EQUIPMENT_OWNER"/>
+        <result property="itemNumber" column="ITEM_NUMBER"/>
+        <result property="equipmentDepartment" column="EQUIPMENT_DEPARTMENT"/>
+        <result property="criticalEquipment" column="CRITICAL_EQUIPMENT"/>
+        <result property="stopTime" column="STOP_TIME"/>
+        <result property="totalPrice" column="TOTAL_PRICE"/>
+        <result property="mainUses" column="MAIN_USES"/>
+        <result property="remark" column="REMARK"/>
+        <result property="assetType" column="ASSET_TYPE"/>
+        <result property="parentId" column="PARENT_ID"/>
+        <result property="dismissReason" column="DISMISS_REASON"/>
+    </resultMap>
+
+    <select id="selectall" parameterType="java.util.Map" resultMap="vAssetsChangeRecordsMap" >
+        select v.ID,
+                v.ASSETS_ID,
+                v.ASSETS_STATUS,
+                p.UNIFIED_CODE,
+                p.DEVICENAME,
+                p.UNIT_TYPE,
+                p.MEASUREMENT_RANGE,
+                p.ORIGINAL_VALUE,
+                p.GRADE,
+                p.TAX_RATE,
+                p.AFTER_TAX_PRICE,
+                p.ASSETS_CLASS,
+                p.MEASUREMENT_CHECK_CLASS,
+                p.FACITITY_CATEGORY,
+                p.INSTALLED_CAPACITY,
+                p.DELIVERY_TIME,
+                p.USES_TIME,
+                p.FACITITY_STATUS,
+                p.FACILITY_DESIGNATED_AREA,
+                p.MANUFACTURER,
+                p.PRINCIPAL,
+                p.EQUIPMENT_SUBORDINATE,
+                p.EQUIPMENT_OWNER,
+                p.ITEM_NUMBER,
+                p.EQUIPMENT_DEPARTMENT,
+                p.CRITICAL_EQUIPMENT,
+                p.STOP_TIME,
+                p.TOTAL_PRICE,
+                p.MAIN_USES,
+                p.REMARK,
+                p.ASSET_TYPE,
+                p.DISMISS_REASON
+        from V_ASSETS_CHANGE v LEFT JOIN V_ASSETS_PARAMETER p on v.ASSETS_ID = p."ID"
+        where 1=1 and v.ASSETS_STATUS = P .ASSETS_STATUS
+        <if test="recordStatusList != null ">
+            and  v.ASSETS_STATUS
+            in
+            <foreach collection="recordStatusList" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="devicename != '' and devicename != null">
+           and  p.DEVICENAME  = #{devicename}
+        </if>
+        <if test="crtUserId != '' and crtUserId != null">
+            and  v.CRT_USER_ID  = #{crtUserId}
+        </if>
+        <if test="updUserId != '' and updUserId != null">
+            and  v.UPD_USER_ID  = #{updUserId}
+        </if>
+        <if test="assetStatusList != null ">
+            and  p.ASSETS_STATUS
+            in
+            <foreach collection="assetStatusList" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <!--<if test="isBacklog  != null">-->
+            <!--AND v."VERSION" = (-->
+            <!--SELECT-->
+            <!--MAX (i."VERSION")-->
+            <!--FROM-->
+            <!--V_ASSETS_CHANGE_RECORDS i-->
+            <!--LEFT JOIN V_ASSETS_PARAMETER t ON t.ID = i.ASSETS_ID-->
+            <!--WHERE 1=1-->
+
+            <!--<if test="assetStatusList != null ">-->
+                <!--and  i.ASSETS_STATUS-->
+                <!--in-->
+                <!--<foreach collection="assetStatusList" index="index" item="item" open="(" separator="," close=")">-->
+                    <!--#{item}-->
+                <!--</foreach>-->
+            <!--</if>-->
+            <!--<if test="assetStatusList != null ">-->
+                <!--and  t.ASSETS_STATUS-->
+                <!--in-->
+                <!--<foreach collection="assetStatusList" index="index" item="item" open="(" separator="," close=")">-->
+                    <!--#{item}-->
+                <!--</foreach>-->
+            <!--</if>-->
+            <!--)-->
+        <!--</if>-->
+    </select>
+
+    <select id="selectChangeFinish" parameterType="java.util.Map" resultMap="vAssetsChangeRecordsMap" >
+        select v.ID,
+        v.ASSETS_ID,
+        v.ASSETS_STATUS,
+        p.UNIFIED_CODE,
+        p.DEVICENAME,
+        p.UNIT_TYPE,
+        p.MEASUREMENT_RANGE,
+        p.ORIGINAL_VALUE,
+        p.GRADE,
+        p.TAX_RATE,
+        p.AFTER_TAX_PRICE,
+        p.ASSETS_CLASS,
+        p.MEASUREMENT_CHECK_CLASS,
+        p.FACITITY_CATEGORY,
+        p.INSTALLED_CAPACITY,
+        p.DELIVERY_TIME,
+        p.USES_TIME,
+        p.FACITITY_STATUS,
+        p.FACILITY_DESIGNATED_AREA,
+        p.MANUFACTURER,
+        p.PRINCIPAL,
+        p.EQUIPMENT_SUBORDINATE,
+        p.EQUIPMENT_OWNER,
+        p.ITEM_NUMBER,
+        p.EQUIPMENT_DEPARTMENT,
+        p.CRITICAL_EQUIPMENT,
+        p.STOP_TIME,
+        p.TOTAL_PRICE,
+        p.MAIN_USES,
+        p.REMARK,
+        p.ASSET_TYPE,
+        p.DISMISS_REASON
+        from V_ASSETS_CHANGE_RECORDS v LEFT JOIN V_ASSETS_PARAMETER p on v.ASSETS_ID = p."ID"
+        where 1=1
+        <if test="recordStatusList != null ">
+            and  v.ASSETS_STATUS
+            in
+            <foreach collection="recordStatusList" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="crtUserId != null ">
+            and  v.CRT_USER_ID = #{crtUserId}
+        </if>
+        <if test="devicename != ''">
+            and  p.DEVICENAME  = #{devicename}
+        </if>
+    </select>
+
+    <select id="selectRecordAll" parameterType="java.util.Map" resultMap="vAssetsChangeRecordsMap" >
+        SELECT
+        p. ID,
+        r.ASSETS_STATUS,
+        r.CRT_USER_NAME,
+        P .UNIFIED_CODE,
+        P .DEVICENAME,
+        P .UNIT_TYPE,
+        P .MEASUREMENT_RANGE,
+        P .ORIGINAL_VALUE,
+        P .GRADE,
+        P .TAX_RATE,
+        P .AFTER_TAX_PRICE,
+        P .ASSETS_CLASS,
+        P .MEASUREMENT_CHECK_CLASS,
+        P .FACITITY_CATEGORY,
+        P .INSTALLED_CAPACITY,
+        P .DELIVERY_TIME,
+        P .USES_TIME,
+        P .FACITITY_STATUS,
+        P .FACILITY_DESIGNATED_AREA,
+        P .MANUFACTURER,
+        P .PRINCIPAL,
+        P .EQUIPMENT_SUBORDINATE,
+        P .EQUIPMENT_OWNER,
+        P .ITEM_NUMBER,
+        P .EQUIPMENT_DEPARTMENT,
+        P .CRITICAL_EQUIPMENT,
+        P .STOP_TIME,
+        P .TOTAL_PRICE,
+        P .MAIN_USES,
+        P .REMARK,
+        P .ASSET_TYPE,
+        P .DISMISS_REASON
+        FROM
+        V_ASSETS_CHANGE_RECORDS r
+        LEFT JOIN V_ASSETS_PARAMETER P ON r.ASSETS_ID = P ."ID"
+        WHERE
+        1 = 1
+        <if test="devicename != '' and devicename != null">
+            and  p.DEVICENAME  = #{devicename}
+        </if>
+        <if test="unifiedCode != '' and unifiedCode != null">
+            and  p.UNIFIED_CODE  = #{unifiedCode}
+        </if>
+        <if test="unitType != '' and unitType != null">
+            and  p.UNIT_TYPE  = #{unitType}
+        </if>
+        <if test="assetsClass != '' and assetsClass != null">
+            and  p.ASSETS_CLASS  = #{assetsClass}
+        </if>
+        <if test="equipmentOwner != '' and equipmentOwner != null">
+            and  v.EQUIPMENT_OWNER  = #{equipmentOwner}
+        </if>
+        <if test="equipmentDepartment != '' and equipmentDepartment != null">
+            and  v.EQUIPMENT_DEPARTMENT  = #{equipmentDepartment}
+        </if>
+        <if test="facitityStatus != '' and facitityStatus != null">
+            and  v.FACITITY_STATUS  = #{facitityStatus}
+        </if>
+        <if test="assetStatus != '' and assetStatus != null">
+            and  r.ASSETS_STATUS  = #{assetStatus}
+        </if>
+    </select>
+
+    <select id="selectVersion" parameterType="java.util.Map" resultType="Integer">
+        SELECT max(v."VERSION") from V_ASSETS_CHANGE_RECORDS v
+        where 1=1
+        and v.ASSETS_ID = #{id}
+        and v.ASSETS_STATUS = #{assetsStatus}
+    </select>
+
+</mapper>

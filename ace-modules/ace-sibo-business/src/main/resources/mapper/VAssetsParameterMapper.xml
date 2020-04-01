@@ -1,0 +1,791 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sibo.business.mapper.VAssetsParameterMapper">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.sibo.business.vo.StatisticsAssetsNumVo" id="statisticsAssetsNumVoMap">
+        <result property="facitityCategory" column="FACITITY_CATEGORY"/>
+        <result property="AssetsClass" column="ASSETS_CLASS"/>
+        <result property="count" column="NUM"/>
+    </resultMap>
+    <resultMap type="com.sibo.business.entity.VAssetsParameter" id="vAssetsParameterMap">
+        <result property="id" column="ID"/>
+        <result property="unifiedCode" column="UNIFIED_CODE"/>
+        <result property="devicename" column="DEVICENAME"/>
+        <result property="unitType" column="UNIT_TYPE"/>
+        <result property="measurementRange" column="MEASUREMENT_RANGE"/>
+        <result property="originalValue" column="ORIGINAL_VALUE"/>
+        <result property="grade" column="GRADE"/>
+        <result property="taxRate" column="TAX_RATE"/>
+        <result property="afterTaxPrice" column="AFTER_TAX_PRICE"/>
+        <result property="assetsClass" column="ASSETS_CLASS"/>
+        <result property="measurementCheckClass" column="MEASUREMENT_CHECK_CLASS"/>
+        <result property="facitityCategory" column="FACITITY_CATEGORY"/>
+        <result property="installedCapacity" column="INSTALLED_CAPACITY"/>
+        <result property="deliveryTime" column="DELIVERY_TIME"/>
+        <result property="usesTime" column="USES_TIME"/>
+        <result property="facitityStatus" column="FACITITY_STATUS"/>
+        <result property="facilityDesignatedArea" column="FACILITY_DESIGNATED_AREA"/>
+        <result property="manufacturer" column="MANUFACTURER"/>
+        <result property="principal" column="PRINCIPAL"/>
+        <result property="equipmentSubordinate" column="EQUIPMENT_SUBORDINATE"/>
+        <result property="equipmentOwner" column="EQUIPMENT_OWNER"/>
+        <result property="itemNumber" column="ITEM_NUMBER"/>
+        <result property="equipmentDepartment" column="EQUIPMENT_DEPARTMENT"/>
+        <result property="criticalEquipment" column="CRITICAL_EQUIPMENT"/>
+        <result property="stopTime" column="STOP_TIME"/>
+        <result property="totalPrice" column="TOTAL_PRICE"/>
+        <result property="mainUses" column="MAIN_USES"/>
+        <result property="remark" column="REMARK"/>
+        <result property="crtUserName" column="CRT_USER_NAME"/>
+        <result property="crtUserId" column="CRT_USER_ID"/>
+        <result property="crtTime" column="CRT_TIME"/>
+        <result property="updUserName" column="UPD_USER_NAME"/>
+        <result property="updUserId" column="UPD_USER_ID"/>
+        <result property="updTime" column="UPD_TIME"/>
+        <result property="assetType" column="ASSET_TYPE"/>
+        <result property="parentId" column="PARENT_ID"/>
+        <result property="amount" column="AMOUNT"/>
+        <result property="additionalName" column="ADDITIONALNAME"/>
+        <result property="addDate" column="ADDDATE"/>
+        <result property="admin" column="ADMIN"/>
+        <result property="equipmentNumber" column="EQUIPMENT_NUMBER"/>
+        <result property="dismissReason" column="DISMISS_REASON"/>
+        <result property="assetsStatus" column="ASSETS_STATUS"/>
+        <result property="statusDescription" column="STATUS_DESCRIPTION"/>
+        <result property="appearanceDescription" column="APPEARANCE_DESCRIPTION"/>
+        <result property="cruxMaintainNum" column="CRUX_MAINTAIN_NUM"/>
+        <result property="everyDayMaintainNum" column="EVERYDAY_MAINTAIN_NUM"/>
+        <result property="charge" column="CHARGE"/>
+        <result property="recentMeasurementPlanTime" column="RECENT_MEASUREMENT_PLAN_TIME"/>
+        <result property="measurementCycle" column="MEASUREMENT_CYCLE"/>
+        <result property="measurementValidity" column="MEASUREMENT_VALIDITY"/>
+        <result property="measurementUnit" column="MEASUREMENT_UNIT"/>
+        <result property="measurementGistName" column="MEASUREMENT_GIST_NAME"/>
+        <result property="measurementGistCode" column="MEASUREMENT_GIST_CODE"/>
+        <result property="measurementResult" column="MEASUREMENT_RESULT"/>
+        <result property="measurementCost" column="MEASUREMENT_COST"/>
+        <result property="certificateNumber" column="CERTIFICATE_NUMBER"/>
+        <result property="measueementStatus" column="MEASUEEMENT_STATUS"/>
+        <result property="verifyCurrentStatus" column="VERIFY_CURRENT_STATUS"/>
+        <result property="standardLimit" column="STANDARD_LIMIT"/>
+        <result property="periodDate" column="PERIOD_DATE"/>
+        <result property="periodCheckCycle" column="PERIOD_CHECK_CYCLE"/>
+        <result property="isReviewed" column="IS_REVIEWED"/>
+        <result property="credentialFileId" column="CREDENTIAL_FILE_ID"/>
+        <result property="softwareBrand" column="SOFTWARE_BRAND"/>
+        <result property="softwareVersion" column="SOFTWARE_VERSION"/>
+        <result property="periodDateStop" column="PERIOD_DATE_STOP"/>
+    </resultMap>
+
+    <select id="selectChangePageList" parameterType="java.util.Map" resultMap="vAssetsParameterMap" >
+        SELECT
+        v .ID,
+        P .ASSETS_STATUS,
+        P .UNIFIED_CODE,
+        P .DEVICENAME,
+        P .UNIT_TYPE,
+        P .MEASUREMENT_RANGE,
+        P .ORIGINAL_VALUE,
+        P .GRADE,
+        P .TAX_RATE,
+        P .AFTER_TAX_PRICE,
+        P .ASSETS_CLASS,
+        P .MEASUREMENT_CHECK_CLASS,
+        P .FACITITY_CATEGORY,
+        P .INSTALLED_CAPACITY,
+        P .DELIVERY_TIME,
+        P .USES_TIME,
+        P .FACITITY_STATUS,
+        P .FACILITY_DESIGNATED_AREA,
+        P .MANUFACTURER,
+        P .PRINCIPAL,
+        P .EQUIPMENT_SUBORDINATE,
+        P .EQUIPMENT_OWNER,
+        P .ITEM_NUMBER,
+        v .EQUIPMENT_DEPARTMENT,
+        P .CRITICAL_EQUIPMENT,
+        P .STOP_TIME,
+        P .TOTAL_PRICE,
+        P .MAIN_USES,
+        P .REMARK,
+        P .ASSET_TYPE,
+        P .DISMISS_REASON,
+        P .EQUIPMENT_NUMBER,
+        P .AMOUNT,
+        P .ADDITIONALNAME,
+        P .ADDDATE,
+        P .ADMIN,
+        P .STATUS_DESCRIPTION,
+        P .APPEARANCE_DESCRIPTION
+        FROM
+        V_ASSETS_RECEIVE_MAIN v LEFT JOIN V_ASSETS_PARAMETER p  ON p."ID" = v.ASSETS_ID
+        WHERE
+        1 = 1
+        <if test="assetsStatus != '' and assetsStatus != null">
+            and  v.ASSETS_STATUS  = #{assetsStatus}
+        </if>
+        <if test="devicename != '' and devicename != null">
+            and  p.DEVICENAME   LIKE '%${devicename}%'
+        </if>
+
+        <if test="principal != '' and principal != null ">
+            and  v.RECIPIENT  = #{principal}
+        </if>
+
+        <if test="facilityDesignatedArea != '' and facilityDesignatedArea != null ">
+            and  p.FACILITY_DESIGNATED_AREA  = #{facilityDesignatedArea}
+        </if>
+
+        <if test="equipmentDepartment != '' and equipmentDepartment != null ">
+            and  p.EQUIPMENT_DEPARTMENT  = #{equipmentDepartment}
+        </if>
+
+        <if test="mainPrincipal != '' and mainPrincipal != null ">
+            and  p.PRINCIPAL  is null
+        </if>
+    </select>
+
+
+    <select id="getMaxNum" resultType="String">
+          SELECT
+                CASE
+            WHEN ASSET_TYPE = '1' THEN
+                MAX (SUBSTR(UNIFIED_CODE, 10))
+            ELSE
+                MAX (SUBSTR(UNIFIED_CODE, 13))
+            END AS aaa
+            FROM
+                V_ASSETS_PARAMETER
+            WHERE
+                ASSET_TYPE = #{assetType}
+                AND ASSETS_CLASS = #{assetsClass}
+                AND TO_NUMBER (TO_CHAR(USES_TIME, 'YYYYmm')) = #{yearMonth}
+            GROUP BY
+                ASSET_TYPE
+    </select>
+
+    <select id="getOtherMaxNum" resultType="String">
+          SELECT
+               MAX (SUBSTR(UNIFIED_CODE, 13)) AS aaa
+            FROM
+                V_ASSETS_PARAMETER
+            WHERE
+                ASSET_TYPE = #{assetType}
+                and UNIFIED_CODE like #{unifiedCode}
+    </select>
+
+    <select id="queryDashboardAssetsCount" parameterType="string" resultMap="statisticsAssetsNumVoMap"  >
+          SELECT
+              v.ASSETS_CLASS,COUNT (v."ID") as num
+            FROM
+                V_ASSETS_PARAMETER v
+            WHERE 1=1
+                <if test="_parameter  != '' and _parameter  != null ">
+                    and  TO_NUMBER (TO_CHAR(v.CRT_TIME, 'YYYY')) = #{_parameter}
+                </if>
+            GROUP BY
+                v.ASSETS_CLASS
+    </select>
+
+    <select id="queryDashboardAssetsCategoryCount" parameterType="string" resultMap="statisticsAssetsNumVoMap"  >
+        SELECT
+            v.ASSETS_CLASS,sum (v.TOTAL_PRICE) as num
+            FROM
+                V_ASSETS_PARAMETER v
+            WHERE
+                1 = 1
+            AND TO_NUMBER (TO_CHAR(v.CRT_TIME, 'YYYY')) = #{_parameter}
+            GROUP BY
+                v.ASSETS_CLASS
+    </select>
+
+    <!--计量费用查询-->
+    <select id="queryYearMeasurementCost" parameterType="string" resultMap="vAssetsParameterMap"  >
+        SELECT
+            v.MEASUREMENT_UNIT,v.MEASUREMENT_COST,v.RECENT_MEASUREMENT_PLAN_TIME
+        FROM
+            V_MEASUREMENT_VERIFICATION P
+        LEFT JOIN V_ASSETS_PARAMETER v ON P .ASSET_ID = v."ID"
+        WHERE
+            P .MEASUEEMENT_VERIFICATION_STATU = '1'
+    </select>
+
+    <select id="selectAssetsParameterPageList" parameterType="java.util.Map" resultMap="vAssetsParameterMap" >
+        select
+        P . ID,
+        P .ASSETS_STATUS,
+        P .UNIFIED_CODE,
+        P .DEVICENAME,
+        P .UNIT_TYPE,
+        P .MEASUREMENT_RANGE,
+        P .ORIGINAL_VALUE,
+        P .GRADE,
+        P .TAX_RATE,
+        P .AFTER_TAX_PRICE,
+        P .ASSETS_CLASS,
+        P .MEASUREMENT_CHECK_CLASS,
+        P .FACITITY_CATEGORY,
+        P .INSTALLED_CAPACITY,
+        P .DELIVERY_TIME,
+        P .USES_TIME,
+        P .FACITITY_STATUS,
+        P .FACILITY_DESIGNATED_AREA,
+        P .MANUFACTURER,
+        P .PRINCIPAL,
+        P .EQUIPMENT_SUBORDINATE,
+        P .EQUIPMENT_OWNER,
+        P .ITEM_NUMBER,
+        P .EQUIPMENT_DEPARTMENT,
+        P .CRITICAL_EQUIPMENT,
+        P .STOP_TIME,
+        P .TOTAL_PRICE,
+        P .MAIN_USES,
+        P .REMARK,
+        P .ASSET_TYPE,
+        P .DISMISS_REASON,
+        P .EQUIPMENT_NUMBER,
+        P .AMOUNT,
+        P .ADDITIONALNAME,
+        P .ADDDATE,
+        P .ADMIN,
+        P .STATUS_DESCRIPTION,
+        P .APPEARANCE_DESCRIPTION,
+        P .SOFTWARE_BRAND,
+        P .SOFTWARE_VERSION
+        from V_ASSETS_PARAMETER p   where  1=1 and p.PARENT_ID is null
+        <if test="devicename != '' and devicename != null">
+            and  p.DEVICENAME   LIKE '%${devicename}%'
+        </if>
+        <if test="unifiedCode != '' and unifiedCode != null">
+            and  p.UNIFIED_CODE  = #{unifiedCode}
+        </if>
+        <if test="unitType != '' and unitType != null">
+            and  p.UNIT_TYPE  = #{unitType}
+        </if>
+        <if test="assetsClass != '' and assetsClass != null">
+            and  p.ASSETS_CLASS  = #{assetsClass}
+        </if>
+        <if test="facitityStatus != '' and facitityStatus != null">
+            and  p.FACITITY_STATUS  = #{facitityStatus}
+        </if>
+        <if test="equipmentDepartment != '' and equipmentDepartment != null">
+            and  p.EQUIPMENT_DEPARTMENT  = #{equipmentDepartment}
+        </if>
+        <if test="criticalEquipment != '' and criticalEquipment != null">
+            and  p.CRITICAL_EQUIPMENT  = #{criticalEquipment}
+        </if>
+        <if test="measurementCheckClass != '' and measurementCheckClass != null ">
+            and  p.MEASUREMENT_CHECK_CLASS  = #{measurementCheckClass}
+        </if>
+        <if test="facilityDesignatedArea != '' and facilityDesignatedArea != null ">
+            and  p.FACILITY_DESIGNATED_AREA  = #{facilityDesignatedArea}
+        </if>
+        <if test="principal != '' and principal != null ">
+            and  p.PRINCIPAL  = #{principal}
+        </if>
+        <if test="assetStatus != '' and assetStatus != null ">
+            and  p.ASSETS_STATUS  = #{assetStatus}
+        </if>
+        <if test="equipmentNumber != '' and equipmentNumber != null">
+            and  p.EQUIPMENT_NUMBER   LIKE '%${equipmentNumber}%'
+        </if>
+        <if test="EQUIPMENT_SUBORDINATE != '' and equipmentSubordinate != null">
+            and  p.EQUIPMENT_DEPARTMENT  = #{equipmentSubordinate}
+        </if>
+        <if test="facitityCategory != '' and facitityCategory != null">
+            and  p.FACITITY_CATEGORY  = #{facitityCategory}
+        </if>
+        <if test="installedCapacity != '' and installedCapacity != null ">
+            and  p.INSTALLED_CAPACITY  = #{installedCapacity}
+        </if>
+        <if test="manufacturer != '' and manufacturer != null ">
+            and  p.MANUFACTURER   LIKE '%${manufacturer}%'
+        </if>
+        <if test="agent != '' and agent != null ">
+            and  p.AGENT  = #{agent}
+        </if>
+        <if test="dataManager != '' and dataManager != null ">
+            and  p.DATA_MANAGER  = #{dataManager}
+        </if>
+    </select>
+
+    <select id="selectEquipmentPageList" parameterType="java.util.Map" resultMap="vAssetsParameterMap" >
+        select
+        P . ID,
+        P .ASSETS_STATUS,
+        P .UNIFIED_CODE,
+        P .DEVICENAME,
+        P .UNIT_TYPE,
+        P .MEASUREMENT_RANGE,
+        P .ORIGINAL_VALUE,
+        P .GRADE,
+        P .TAX_RATE,
+        P .AFTER_TAX_PRICE,
+        P .ASSETS_CLASS,
+        P .MEASUREMENT_CHECK_CLASS,
+        P .FACITITY_CATEGORY,
+        P .INSTALLED_CAPACITY,
+        P .DELIVERY_TIME,
+        P .USES_TIME,
+        P .FACITITY_STATUS,
+        P .FACILITY_DESIGNATED_AREA,
+        P .MANUFACTURER,
+        P .PRINCIPAL,
+        P .EQUIPMENT_SUBORDINATE,
+        P .EQUIPMENT_OWNER,
+        P .ITEM_NUMBER,
+        P .EQUIPMENT_DEPARTMENT,
+        P .CRITICAL_EQUIPMENT,
+        P .STOP_TIME,
+        P .TOTAL_PRICE,
+        P .MAIN_USES,
+        P .REMARK,
+        P .ASSET_TYPE,
+        P .DISMISS_REASON,
+        P .EQUIPMENT_NUMBER,
+        P .AMOUNT,
+        P .ADDITIONALNAME,
+        P .ADDDATE,
+        P .ADMIN,
+        P .STATUS_DESCRIPTION,
+        P .APPEARANCE_DESCRIPTION,
+        P .SOFTWARE_BRAND,
+        P .SOFTWARE_VERSION
+        from V_ASSETS_PARAMETER p   where  1=1
+            and p.ASSETS_STATUS = #{assetsStatus} and p.FACITITY_STATUS = #{facitityStatus} and p.FACILITY_DESIGNATED_AREA = #{facilityDesignatedArea}
+
+            and (
+                p.UNIT_TYPE  like upper(#{searchAll}) or p.UNIT_TYPE like  lower(#{searchAll}) or p.UNIT_TYPE like  #{searchAll}
+                or p.UNIFIED_CODE like upper(#{searchAll}) or p.UNIFIED_CODE like  lower(#{searchAll}) or p.UNIFIED_CODE like  #{searchAll}
+                or  p.FACITITY_STATUS  like upper(#{searchAll}) or p.FACITITY_STATUS like  lower(#{searchAll}) or p.FACITITY_STATUS like  #{searchAll}
+                or  p.DEVICENAME like upper(#{searchAll}) or p.DEVICENAME like  lower(#{searchAll}) or p.DEVICENAME like  #{searchAll}
+                or  p.MEASUREMENT_RANGE like upper(#{searchAll}) or p.MEASUREMENT_RANGE like  lower(#{searchAll})  or p.MEASUREMENT_RANGE like  #{searchAll}
+                or  p.ORIGINAL_VALUE  like upper(#{searchAll}) or p.ORIGINAL_VALUE like  lower(#{searchAll})  or p.ORIGINAL_VALUE like  #{searchAll}
+                or  p.MANUFACTURER  like upper(#{searchAll}) or p.MANUFACTURER like  lower(#{searchAll})  or p.MANUFACTURER like  #{searchAll}
+                or  p.ITEM_NUMBER  like upper(#{searchAll}) or p.ITEM_NUMBER like  lower(#{searchAll})  or p.ITEM_NUMBER like  #{searchAll}
+                or  p.TOTAL_PRICE  like upper(#{searchAll}) or p.TOTAL_PRICE like  lower(#{searchAll})  or p.TOTAL_PRICE like  #{searchAll}
+                or  p.AFTER_TAX_PRICE like upper(#{searchAll}) or p.AFTER_TAX_PRICE like  lower(#{searchAll})  or p.AFTER_TAX_PRICE like  #{searchAll}
+                or  p.EQUIPMENT_NUMBER like  upper(#{searchAll}) or p.EQUIPMENT_NUMBER like  lower(#{searchAll})  or p.EQUIPMENT_NUMBER like  #{searchAll}
+            )
+
+
+        order by CRT_TIME desc,UNIFIED_CODE_ORDER ASC
+
+    </select>
+
+
+    <select id="selectAssetsParameterAll" parameterType="java.util.Map" resultMap="vAssetsParameterMap" >
+        select
+        P . ID,
+        P .ASSETS_STATUS,
+        P .UNIFIED_CODE,
+        P .DEVICENAME,
+        P .UNIT_TYPE,
+        P .MEASUREMENT_RANGE,
+        P .ORIGINAL_VALUE,
+        P .GRADE,
+        P .TAX_RATE,
+        P .AFTER_TAX_PRICE,
+        P .ASSETS_CLASS,
+        P .MEASUREMENT_CHECK_CLASS,
+        P .FACITITY_CATEGORY,
+        P .INSTALLED_CAPACITY,
+        P .DELIVERY_TIME,
+        P .USES_TIME,
+        P .FACITITY_STATUS,
+        P .FACILITY_DESIGNATED_AREA,
+        P .MANUFACTURER,
+        P .PRINCIPAL,
+        P .EQUIPMENT_SUBORDINATE,
+        P .EQUIPMENT_OWNER,
+        P .ITEM_NUMBER,
+        P .EQUIPMENT_DEPARTMENT,
+        P .CRITICAL_EQUIPMENT,
+        P .STOP_TIME,
+        P .TOTAL_PRICE,
+        P .MAIN_USES,
+        P .REMARK,
+        P .ASSET_TYPE,
+        P .DISMISS_REASON,
+        P .EQUIPMENT_NUMBER,
+        P .AMOUNT,
+        P .ADDITIONALNAME,
+        P .ADDDATE,
+        P .ADMIN,
+        P .STATUS_DESCRIPTION,
+        P .APPEARANCE_DESCRIPTION,
+        P .CRUX_MAINTAIN_NUM,
+        P .EVERYDAY_MAINTAIN_NUM,
+        P .CHARGE,
+        P.RECENT_MEASUREMENT_PLAN_TIME,
+        P.MEASUREMENT_CYCLE,
+        P.MEASUREMENT_VALIDITY,
+        P.MEASUREMENT_UNIT,
+        P.MEASUREMENT_GIST_NAME,
+        P.MEASUREMENT_GIST_CODE,
+        P.MEASUREMENT_RESULT,
+        P.MEASUREMENT_COST,
+        P.CERTIFICATE_NUMBER,
+        P.VERIFY_CURRENT_STATUS,
+        P.STANDARD_LIMIT,
+        P.PERIOD_DATE,
+        P.PERIOD_CHECK_CYCLE,
+        P.IS_REVIEWED,
+        P.CREDENTIAL_FILE_ID,
+        P .SOFTWARE_BRAND,
+        P .SOFTWARE_VERSION,
+        P .PERIOD_DATE_STOP
+        from V_ASSETS_PARAMETER p   where  1=1
+        <if test="year != '' and year != null">
+            and  to_number(to_char(p.MEASUREMENT_VALIDITY,'YYYY'))  = #{year}
+        </if>
+        <if test="month != '' and month != null">
+            and  to_number(to_char(p.MEASUREMENT_VALIDITY,'YYYYmm'))  = #{month}
+        </if>
+        <if test="periodDateYear != '' and periodDateYear != null">
+            and  to_number(to_char(p.PERIOD_DATE_STOP,'YYYY'))  = #{periodDateYear}
+        </if>
+        <if test="periodDateMonth != '' and periodDateMonth != null">
+            and  to_number(to_char(p.PERIOD_DATE_STOP,'YYYYmm'))  = #{periodDateMonth}
+        </if>
+        <if test="unifiedCode != '' and unifiedCode != null">
+            and (upper(p.UNIFIED_CODE)  = upper(#{unifiedCode}) or lower(p.UNIFIED_CODE)  = lower(#{unifiedCode}) or p.UNIFIED_CODE  = #{unifiedCode} )
+        </if>
+        <if test="unitType != '' and unitType != null">
+            and  p.UNIT_TYPE  = #{unitType}
+        </if>
+        <if test="facitityStatus != '' and facitityStatus != null">
+            and  p.FACITITY_STATUS  = #{facitityStatus}
+        </if>
+        <if test="assetsClass != '' and assetsClass != null">
+            and  p.ASSETS_CLASS  = #{assetsClass}
+        </if>
+        <if test="devicename != '' and devicename != null">
+            and (upper(p.DEVICENAME)  = upper(#{devicename}) or lower(p.DEVICENAME)  = lower(#{devicename}) or p.DEVICENAME  = #{devicename} )
+        </if>
+        <if test="principal != '' and principal != null ">
+            and  (upper(p.PRINCIPAL)  = upper(#{principal}) or lower(p.PRINCIPAL)  = lower(#{principal}) or p.PRINCIPAL  = #{principal} )
+        </if>
+        <if test="facilityDesignatedArea != '' and facilityDesignatedArea != null ">
+            and  p.FACILITY_DESIGNATED_AREA  = #{facilityDesignatedArea}
+        </if>
+        <if test="measurementCheckClass != '' and measurementCheckClass != null ">
+            and  p.MEASUREMENT_CHECK_CLASS  = #{measurementCheckClass}
+        </if>
+        <if test="isReviewed != '' and isReviewed != null ">
+            and  p.IS_REVIEWED  = #{isReviewed}
+        </if>
+        <if test="recentMeasurementPlanTime != '' and recentMeasurementPlanTime != null ">
+            and  p.RECENT_MEASUREMENT_PLAN_TIME  = #{recentMeasurementPlanTime}
+        </if>
+        <if test="equipmentDepartment != '' and equipmentDepartment != null ">
+            and  p.EQUIPMENT_DEPARTMENT  = #{equipmentDepartment}
+        </if>
+        <if test="measurementCycle != '' and measurementCycle != null ">
+            and  p.MEASUREMENT_CYCLE  = #{measurementCycle}
+        </if>
+        <if test="measueementStatus != '' and measueementStatus != null ">
+            and  p.MEASUEEMENT_STATUS  = #{measueementStatus}
+        </if>
+        <if test="notmeasueementStatus != '' and notmeasueementStatus != null ">
+            and <![CDATA[ p.MEASUEEMENT_STATUS <> #{notmeasueementStatus} ]]>
+        </if>
+        <if test="notmeasueementStatus1 != '' and notmeasueementStatus1 != null ">
+            and <![CDATA[ p.MEASUEEMENT_STATUS <> #{notmeasueementStatus1} ]]>
+        </if>
+        <if test="assetStatusList != null ">
+        and  p.ASSETS_STATUS
+        in
+        <foreach collection="assetStatusList" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        </if>
+    </select>
+    <!--计量/期间计划查询-->
+    <select id="selectAssetsParamerByPlay" parameterType="java.util.Map" resultMap="vAssetsParameterMap" >
+        select
+        P . ID,
+        P .ASSETS_STATUS,
+        P.MEASUEEMENT_STATUS,
+        P .UNIFIED_CODE,
+        P .DEVICENAME,
+        P .UNIT_TYPE,
+        P .MEASUREMENT_RANGE,
+        P .ORIGINAL_VALUE,
+        P .GRADE,
+        P .TAX_RATE,
+        P .AFTER_TAX_PRICE,
+        P .ASSETS_CLASS,
+        P .MEASUREMENT_CHECK_CLASS,
+        P .FACITITY_CATEGORY,
+        P .INSTALLED_CAPACITY,
+        P .DELIVERY_TIME,
+        P .USES_TIME,
+        P .FACITITY_STATUS,
+        P .FACILITY_DESIGNATED_AREA,
+        P .MANUFACTURER,
+        P .PRINCIPAL,
+        P .EQUIPMENT_SUBORDINATE,
+        P .EQUIPMENT_OWNER,
+        P .ITEM_NUMBER,
+        P .EQUIPMENT_DEPARTMENT,
+        P .CRITICAL_EQUIPMENT,
+        P .STOP_TIME,
+        P .TOTAL_PRICE,
+        P .MAIN_USES,
+        P .REMARK,
+        P .ASSET_TYPE,
+        P .DISMISS_REASON,
+        P .EQUIPMENT_NUMBER,
+        P .AMOUNT,
+        P .ADDITIONALNAME,
+        P .ADDDATE,
+        P .ADMIN,
+        P .STATUS_DESCRIPTION,
+        P .APPEARANCE_DESCRIPTION,
+        P .CRUX_MAINTAIN_NUM,
+        P .EVERYDAY_MAINTAIN_NUM,
+        P .CHARGE,
+        P.RECENT_MEASUREMENT_PLAN_TIME,
+        P.MEASUREMENT_CYCLE,
+        P.MEASUREMENT_VALIDITY,
+        P.MEASUREMENT_UNIT,
+        P.MEASUREMENT_GIST_NAME,
+        P.MEASUREMENT_GIST_CODE,
+        P.MEASUREMENT_RESULT,
+        P.MEASUREMENT_COST,
+        P.CERTIFICATE_NUMBER,
+        P.VERIFY_CURRENT_STATUS,
+        P.STANDARD_LIMIT,
+        P.PERIOD_DATE,
+        P.PERIOD_CHECK_CYCLE,
+        P.IS_REVIEWED,
+        P.CREDENTIAL_FILE_ID,
+        P .SOFTWARE_BRAND,
+        P .SOFTWARE_VERSION
+        from V_MEASUREMENT_VERIFICATION c
+        LEFT JOIN  V_ASSETS_PARAMETER P ON P . ID = c .ASSET_ID    where  1=1
+        <if test="measueementVerificationStatu != '' and measueementVerificationStatu != null">
+            and  c.MEASUEEMENT_VERIFICATION_STATU  = #{measueementVerificationStatu}
+        </if>
+        <if test="unifiedCode != '' and unifiedCode != null">
+            and  p.UNIFIED_CODE  = #{unifiedCode}
+        </if>
+        <if test="unitType != '' and unitType != null">
+            and  p.UNIT_TYPE  = #{unitType}
+        </if>
+        <if test="facitityStatus != '' and facitityStatus != null">
+            and  p.FACITITY_STATUS  = #{facitityStatus}
+        </if>
+        <if test="devicename != '' and devicename != null">
+            and  p.DEVICENAME  = #{devicename}
+        </if>
+        <if test="principal != '' and principal != null ">
+            and  p.PRINCIPAL  = #{principal}
+        </if>
+        <if test="facilityDesignatedArea != '' and facilityDesignatedArea != null ">
+            and  p.FACILITY_DESIGNATED_AREA  = #{facilityDesignatedArea}
+        </if>
+        <if test="measurementCheckClass != '' and measurementCheckClass != null ">
+            and  p.MEASUREMENT_CHECK_CLASS  = #{measurementCheckClass}
+        </if>
+        <if test="recentMeasurementPlanTime != '' and recentMeasurementPlanTime != null ">
+            and  p.RECENT_MEASUREMENT_PLAN_TIME  = #{recentMeasurementPlanTime}
+        </if>
+        <if test="measurementCycle != '' and measurementCycle != null ">
+            and  p.MEASUREMENT_CYCLE  = #{measurementCycle}
+        </if>
+        <if test="assetsClass != '' and assetsClass != null ">
+            and  p.ASSETS_CLASS  = #{assetsClass}
+        </if>
+        <if test="equipmentDepartment != '' and equipmentDepartment != null ">
+            and  p.EQUIPMENT_DEPARTMENT  = #{equipmentDepartment}
+        </if>
+        <if test="criticalEquipment != '' and criticalEquipment != null ">
+            and  p.CRITICAL_EQUIPMENT  = #{criticalEquipment}
+        </if>
+        <if test="measurementCheckClass != '' and measurementCheckClass != null ">
+            and  p.MEASUREMENT_CHECK_CLASS  = #{measurementCheckClass}
+        </if>
+        <if test="equipmentNumber != '' and equipmentNumber != null ">
+            and  p.EQUIPMENT_NUMBER  = #{equipmentNumber}
+        </if>
+        <if test="equipmentSubordinate != '' and equipmentSubordinate != null ">
+            and  p.EQUIPMENT_SUBORDINATE  = #{equipmentSubordinate}
+        </if>
+        <if test="facitityCategory != '' and facitityCategory != null ">
+            and  p.FACITITY_CATEGORY  = #{facitityCategory}
+        </if>
+        <if test="installedCapacity != '' and installedCapacity != null ">
+            and  p.INSTALLED_CAPACITY  = #{installedCapacity}
+        </if>
+        <if test="manufacturer != '' and manufacturer != null ">
+            and  p.MANUFACTURER  = #{manufacturer}
+        </if>
+        <if test="agent != '' and agent != null ">
+            and  p.AGENT  = #{agent}
+        </if>
+        <if test="dataManager != '' and dataManager != null ">
+            and  p.DATA_MANAGER  = #{measurementCheckClass}
+        </if>
+        <if test="assetStatusList != null ">
+            and  p.ASSETS_STATUS
+            in
+            <foreach collection="assetStatusList" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="type != null and type != ''">
+            and c.TYPE = #{type}
+        </if>
+        <if test="measurementValidity != null ">
+            order by   p.MEASUREMENT_VALIDITY asc
+        </if>
+        <if test="periodDate != null ">
+            order by   p.PERIOD_DATE asc
+        </if>
+
+    </select>
+
+    <select id="selectAssetsParamerByPlayAllLike" parameterType="java.util.Map" resultMap="vAssetsParameterMap" >
+        select
+        P . ID,
+        P .ASSETS_STATUS,
+        P .UNIFIED_CODE,
+        P .DEVICENAME,
+        P .UNIT_TYPE,
+        P .MEASUREMENT_RANGE,
+        P .ORIGINAL_VALUE,
+        P .GRADE,
+        P .TAX_RATE,
+        P .AFTER_TAX_PRICE,
+        P .ASSETS_CLASS,
+        P .MEASUREMENT_CHECK_CLASS,
+        P .FACITITY_CATEGORY,
+        P .INSTALLED_CAPACITY,
+        P .DELIVERY_TIME,
+        P .USES_TIME,
+        P .FACITITY_STATUS,
+        P .FACILITY_DESIGNATED_AREA,
+        P .MANUFACTURER,
+        P .PRINCIPAL,
+        P .EQUIPMENT_SUBORDINATE,
+        P .EQUIPMENT_OWNER,
+        P .ITEM_NUMBER,
+        P .EQUIPMENT_DEPARTMENT,
+        P .CRITICAL_EQUIPMENT,
+        P .STOP_TIME,
+        P .TOTAL_PRICE,
+        P .MAIN_USES,
+        P .REMARK,
+        P .ASSET_TYPE,
+        P .DISMISS_REASON,
+        P .EQUIPMENT_NUMBER,
+        P .AMOUNT,
+        P .ADDITIONALNAME,
+        P .ADDDATE,
+        P .ADMIN,
+        P .STATUS_DESCRIPTION,
+        P .APPEARANCE_DESCRIPTION,
+        P .CRUX_MAINTAIN_NUM,
+        P .EVERYDAY_MAINTAIN_NUM,
+        P .CHARGE,
+        P.RECENT_MEASUREMENT_PLAN_TIME,
+        P.MEASUREMENT_CYCLE,
+        P.MEASUREMENT_VALIDITY,
+        P.MEASUREMENT_UNIT,
+        P.MEASUREMENT_GIST_NAME,
+        P.MEASUREMENT_GIST_CODE,
+        P.MEASUREMENT_RESULT,
+        P.MEASUREMENT_COST,
+        P.CERTIFICATE_NUMBER,
+        P.VERIFY_CURRENT_STATUS,
+        P.STANDARD_LIMIT,
+        P.PERIOD_DATE,
+        P.PERIOD_CHECK_CYCLE,
+        P.IS_REVIEWED,
+        P.CREDENTIAL_FILE_ID,
+        P .SOFTWARE_BRAND,
+        P .SOFTWARE_VERSION
+        from V_MEASUREMENT_VERIFICATION c
+        LEFT JOIN  V_ASSETS_PARAMETER P ON P . ID = c .ASSET_ID
+        where
+                p.UNIFIED_CODE  like  upper(#{searchAll}) or p.UNIFIED_CODE like  lower(#{searchAll})  or p.UNIFIED_CODE like  #{searchAll}
+            or  p.UNIT_TYPE  like upper(#{searchAll}) or p.UNIT_TYPE like  lower(#{searchAll})  or p.UNIT_TYPE like  #{searchAll}
+            or  p.FACITITY_STATUS  like upper(#{searchAll}) or p.FACITITY_STATUS like  lower(#{searchAll})  or p.FACITITY_STATUS like  #{searchAll}
+            or  p.DEVICENAME like upper(#{searchAll}) or p.DEVICENAME like  lower(#{searchAll})  or p.DEVICENAME like  #{searchAll}
+            or  p.MEASUREMENT_RANGE like upper(#{searchAll}) or p.MEASUREMENT_RANGE like  lower(#{searchAll})  or p.MEASUREMENT_RANGE like  #{searchAll}
+            or  p.ORIGINAL_VALUE  like upper(#{searchAll}) or p.ORIGINAL_VALUE like  lower(#{searchAll})  or p.ORIGINAL_VALUE like  #{searchAll}
+            or  p.MANUFACTURER  like upper(#{searchAll}) or p.MANUFACTURER like  lower(#{searchAll})  or p.MANUFACTURER like  #{searchAll}
+            or  p.ITEM_NUMBER  like upper(#{searchAll}) or p.ITEM_NUMBER like  lower(#{searchAll})  or p.ITEM_NUMBER like  #{searchAll}
+            or  p.TOTAL_PRICE  like upper(#{searchAll}) or p.TOTAL_PRICE like  lower(#{searchAll})  or p.TOTAL_PRICE like  #{searchAll}
+            or  p.AFTER_TAX_PRICE like upper(#{searchAll}) or p.AFTER_TAX_PRICE like  lower(#{searchAll})  or p.AFTER_TAX_PRICE like  #{searchAll}
+            or  p.EQUIPMENT_NUMBER like  upper(#{searchAll}) or p.EQUIPMENT_NUMBER like  lower(#{searchAll}) or p.EQUIPMENT_NUMBER like  #{searchAll}
+        <if test="measurementValidity != null ">
+            order by   p.MEASUREMENT_VALIDITY asc
+        </if>
+        <if test="periodDate != null ">
+            order by   p.PERIOD_DATE asc
+        </if>
+
+    </select>
+
+    <select id="queryLoanPage" parameterType="java.util.Map" resultMap="vAssetsParameterMap" >
+        select
+        P . ID,
+        P .ASSETS_STATUS,
+        P .UNIFIED_CODE,
+        P .DEVICENAME,
+        P .UNIT_TYPE,
+        P .MEASUREMENT_RANGE,
+        P .ORIGINAL_VALUE,
+        P .GRADE,
+        P .TAX_RATE,
+        P .AFTER_TAX_PRICE,
+        P .ASSETS_CLASS,
+        P .MEASUREMENT_CHECK_CLASS,
+        P .FACITITY_CATEGORY,
+        P .INSTALLED_CAPACITY,
+        P .DELIVERY_TIME,
+        P .USES_TIME,
+        P .FACITITY_STATUS,
+        P .FACILITY_DESIGNATED_AREA,
+        P .MANUFACTURER,
+        P .PRINCIPAL,
+        P .EQUIPMENT_SUBORDINATE,
+        P .EQUIPMENT_OWNER,
+        P .ITEM_NUMBER,
+        P .EQUIPMENT_DEPARTMENT,
+        P .CRITICAL_EQUIPMENT,
+        P .STOP_TIME,
+        P .TOTAL_PRICE,
+        P .MAIN_USES,
+        P .REMARK,
+        P .ASSET_TYPE,
+        P .DISMISS_REASON,
+        P .EQUIPMENT_NUMBER,
+        P .AMOUNT,
+        P .ADDITIONALNAME,
+        P .ADDDATE,
+        P .ADMIN,
+        P .STATUS_DESCRIPTION,
+        P .APPEARANCE_DESCRIPTION,
+        P .SOFTWARE_BRAND,
+        P .SOFTWARE_VERSION
+        from V_ASSETS_PARAMETER p   where  1=1 and p.PARENT_ID is not null
+        <if test="devicename != '' and devicename != null">
+            and  p.DEVICENAME  = #{devicename}
+        </if>
+        <if test="facilityDesignatedArea != '' and facilityDesignatedArea != null ">
+            and  p.FACILITY_DESIGNATED_AREA  = #{facilityDesignatedArea}
+        </if>
+        <if test="principal != '' and principal != null ">
+            and  p.PRINCIPAL  = #{principal}
+        </if>
+    </select>
+
+
+
+</mapper>

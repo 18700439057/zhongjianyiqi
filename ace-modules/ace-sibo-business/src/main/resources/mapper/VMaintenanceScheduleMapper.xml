@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sibo.business.mapper.VMaintenanceScheduleMapper">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.sibo.business.vo.VMaintenanceScheduleVo" id="vMaintenanceScheduleMap">
+        <result property="id" column="ID"/>
+        <result property="assetId" column="ASSET_ID"/>
+        <result property="jobContent" column="JOB_CONTENT"/>
+        <result property="nature" column="NATURE"/>
+        <result property="personCharge" column="PERSON_CHARGE"/>
+        <result property="startTime" column="START_TIME"/>
+        <result property="endTime" column="END_TIME"/>
+        <result property="remark" column="REMARK"/>
+        <result property="crtUserName" column="CRT_USER_NAME"/>
+        <result property="crtUserId" column="CRT_USER_ID"/>
+        <result property="crtTime" column="CRT_TIME"/>
+        <result property="updUserName" column="UPD_USER_NAME"/>
+        <result property="updUserId" column="UPD_USER_ID"/>
+        <result property="updTime" column="UPD_TIME"/>
+        <result property="status" column="STATUS"/>
+    </resultMap>
+
+    <select id="selectMaintenanceSchedule" parameterType="java.util.Map" resultMap="vMaintenanceScheduleMap" >
+        SELECT
+            v.ID,
+            v.ASSET_ID,
+            v.JOB_CONTENT,
+            v.NATURE,
+            v.PERSON_CHARGE,
+            v.START_TIME,
+            v.END_TIME,
+            v.REMARK,
+            v.STATUS
+        FROM
+          V_MAINTENANCE_SCHEDULE v
+        WHERE
+        1 = 1
+        <if test="jobContent != '' and jobContent != null">
+            and  v.JOB_CONTENT  = #{jobContent}
+        </if>
+        <if test="assetId != '' and assetId != null">
+            and  v.ASSET_ID  = #{assetId}
+        </if>
+        <if test="nature != '' and nature != null">
+            and  v.NATURE  = #{nature}
+        </if>
+        <if test="personCharge != '' and personCharge != null">
+            and  v.PERSON_CHARGE  = #{personCharge}
+        </if>
+        <if test="startTime != null and startTime != ''">
+            and v.START_TIME &gt;= TO_date(#{startTime}, 'yyyy-mm-dd')
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and v.END_TIME &lt;= TO_date(#{endTime}, 'yyyy-mm-dd')
+        </if>
+        order by v.END_TIME asc
+    </select>
+
+    <select id="selectYearSchedule" parameterType="java.lang.String" resultMap="vMaintenanceScheduleMap" >
+        SELECT *
+            FROM
+                V_MAINTENANCE_SCHEDULE v
+            WHERE
+                TO_NUMBER (TO_CHAR(v.CRT_TIME, 'YYYY'))  =#{year}
+    </select>
+
+
+
+</mapper>

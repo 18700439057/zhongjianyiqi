@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sibo.business.mapper.VInvestmentMapper">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.sibo.business.entity.VInvestment" id="vInvestmentMap">
+        <result property="id" column="ID"/>
+        <result property="projectName" column="PROJECT_NAME"/>
+        <result property="planSumInvestment" column="PLAN_SUM_INVESTMENT"/>
+        <result property="practicalInvestment" column="PRACTICAL_INVESTMENT"/>
+        <result property="accumulativeFinish" column="ACCUMULATIVE_FINISH"/>
+        <result property="projectProgress" column="PROJECT_PROGRESS"/>
+        <result property="remark" column="REMARK"/>
+        <result property="crtUserName" column="CRT_USER_NAME"/>
+        <result property="crtUserId" column="CRT_USER_ID"/>
+        <result property="kyStartTime" column="KY_START_TIME"/>
+        <result property="kyEndTime" column="KY_END_TIME"/>
+        <result property="zbStartTime" column="ZB_START_TIME"/>
+        <result property="zbEndTime" column="ZB_END_TIME"/>
+        <result property="htStartTime" column="HT_START_TIME"/>
+        <result property="htEndTime" column="HT_END_TIME"/>
+        <result property="ssStartTime" column="SS_START_TIME"/>
+        <result property="ssEndTime" column="SS_END_TIME"/>
+        <result property="gnStartTime" column="GN_START_TIME"/>
+        <result property="gnEndTime" column="GN_END_TIME"/>
+        <result property="jgStartTime" column="JG_START_TIME"/>
+        <result property="jgEndTime" column="JG_END_TIME"/>
+        <result property="projectShortName" column="PROJECT_SHORT_NAME"/>
+    </resultMap>
+
+    <select id="queryYearInvestment" resultMap="vInvestmentMap"  parameterType="java.lang.String">
+        SELECT
+            *
+        FROM
+            V_INVESTMENT v
+        WHERE
+            TO_NUMBER (TO_CHAR(v.CRT_TIME, 'YYYY')) =#{year}
+    </select>
+
+</mapper>

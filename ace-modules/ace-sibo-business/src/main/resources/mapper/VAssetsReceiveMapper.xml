@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sibo.business.mapper.VAssetsReceiveMapper">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.sibo.business.vo.VAssetsReceiveVo" id="vAssetsChangeRecordsMap">
+        <result property="id" column="ID"/>
+        <result property="assetsId" column="ASSETS_ID"/>
+        <result property="assetsStatus" column="ASSETS_STATUS"/>
+        <result property="currentStatus" column="CURRENT_STATUS"/>
+        <result property="crtUserName" column="CRT_USER_NAME"/>
+        <result property="crtUserId" column="CRT_USER_ID"/>
+        <result property="crtTime" column="CRT_TIME"/>
+        <result property="updUserName" column="UPD_USER_NAME"/>
+        <result property="updUserId" column="UPD_USER_ID"/>
+        <result property="updTime" column="UPD_TIME"/>
+        <result property="unifiedCode" column="UNIFIED_CODE"/>
+        <result property="devicename" column="DEVICENAME"/>
+        <result property="unitType" column="UNIT_TYPE"/>
+        <result property="measurementRange" column="MEASUREMENT_RANGE"/>
+        <result property="originalValue" column="ORIGINAL_VALUE"/>
+        <result property="grade" column="GRADE"/>
+        <result property="taxRate" column="TAX_RATE"/>
+        <result property="afterTaxPrice" column="AFTER_TAX_PRICE"/>
+        <result property="assetsClass" column="ASSETS_CLASS"/>
+        <result property="measurementCheckClass" column="MEASUREMENT_CHECK_CLASS"/>
+        <result property="facitityCategory" column="FACITITY_CATEGORY"/>
+        <result property="installedCapacity" column="INSTALLED_CAPACITY"/>
+        <result property="deliveryTime" column="DELIVERY_TIME"/>
+        <result property="usesTime" column="USES_TIME"/>
+        <result property="facitityStatus" column="FACITITY_STATUS"/>
+        <result property="facilityDesignatedArea" column="FACILITY_DESIGNATED_AREA"/>
+        <result property="manufacturer" column="MANUFACTURER"/>
+        <result property="principal" column="PRINCIPAL"/>
+        <result property="equipmentSubordinate" column="EQUIPMENT_SUBORDINATE"/>
+        <result property="equipmentOwner" column="EQUIPMENT_OWNER"/>
+        <result property="itemNumber" column="ITEM_NUMBER"/>
+        <result property="equipmentDepartment" column="EQUIPMENT_DEPARTMENT"/>
+        <result property="criticalEquipment" column="CRITICAL_EQUIPMENT"/>
+        <result property="stopTime" column="STOP_TIME"/>
+        <result property="totalPrice" column="TOTAL_PRICE"/>
+        <result property="mainUses" column="MAIN_USES"/>
+        <result property="remark" column="REMARK"/>
+        <result property="assetType" column="ASSET_TYPE"/>
+        <result property="parentId" column="PARENT_ID"/>
+        <result property="dismissReason" column="DISMISS_REASON"/>
+        <result property="equipmentNumber" column="EQUIPMENT_NUMBER"/>
+        <result property="returnPeople" column="RETURN_PEOPLE"/>
+        <result property="returnTime" column="RETURN_TIME"/>
+        <result property="recipient" column="RECIPIENT"/>
+        <result property="recipientTime" column="RECIPIENT_TIME"/>
+    </resultMap>
+
+    <select id="selectall" parameterType="com.sibo.business.vo.VAssetsReceiveVo" resultMap="vAssetsChangeRecordsMap" >
+        select
+        p.ID,
+        p.ASSETS_STATUS,
+        p.UNIFIED_CODE,
+        p.DEVICENAME,
+        p.UNIT_TYPE,
+        p.MEASUREMENT_RANGE,
+        p.ORIGINAL_VALUE,
+        p.GRADE,
+        p.TAX_RATE,
+        p.AFTER_TAX_PRICE,
+        p.ASSETS_CLASS,
+        p.MEASUREMENT_CHECK_CLASS,
+        p.FACITITY_CATEGORY,
+        p.INSTALLED_CAPACITY,
+        p.DELIVERY_TIME,
+        p.USES_TIME,
+        p.FACITITY_STATUS,
+        p.FACILITY_DESIGNATED_AREA,
+        p.MANUFACTURER,
+        p.PRINCIPAL,
+        p.EQUIPMENT_SUBORDINATE,
+        p.EQUIPMENT_OWNER,
+        p.ITEM_NUMBER,
+        p.EQUIPMENT_DEPARTMENT,
+        p.CRITICAL_EQUIPMENT,
+        p.STOP_TIME,
+        p.TOTAL_PRICE,
+        p.MAIN_USES,
+        p.REMARK,
+        p.ASSET_TYPE,
+        p.DISMISS_REASON,
+        p.EQUIPMENT_NUMBER
+        from V_ASSETS_PARAMETER p    where  p.EQUIPMENT_DEPARTMENT is not null and p.PRINCIPAL is not null and  p.FACITITY_STATUS = '1'
+        <if test="assetsReceiveVo.devicename != '' and assetsReceiveVo.devicename != null">
+            and  p.DEVICENAME  = #{assetsReceiveVo.devicename}
+        </if>
+        <if test="assetsReceiveVo.principal != '' and assetsReceiveVo.principal != null ">
+            and  p.PRINCIPAL  = #{assetsReceiveVo.principal}
+        </if>
+        <if test="assetsReceiveVo.assetsStatus != '' and assetsReceiveVo.assetsStatus != null">
+            and  p.ASSETS_STATUS  = #{assetsReceiveVo.assetsStatus}
+        </if>
+    </select>
+
+
+
+    <select id="selectExample" parameterType="java.util.Map" resultMap="vAssetsChangeRecordsMap" >
+        select
+        v.ID,
+        v.ASSETS_ID,
+        p.ASSETS_STATUS,
+        p.UNIFIED_CODE,
+        p.DEVICENAME,
+        p.UNIT_TYPE,
+        p.MEASUREMENT_RANGE,
+        p.ORIGINAL_VALUE,
+        p.GRADE,
+        p.TAX_RATE,
+        p.AFTER_TAX_PRICE,
+        p.ASSETS_CLASS,
+        p.MEASUREMENT_CHECK_CLASS,
+        p.FACITITY_CATEGORY,
+        p.INSTALLED_CAPACITY,
+        p.DELIVERY_TIME,
+        p.USES_TIME,
+        p.FACITITY_STATUS,
+        p.FACILITY_DESIGNATED_AREA,
+        p.MANUFACTURER,
+        p.PRINCIPAL,
+        p.EQUIPMENT_SUBORDINATE,
+        p.EQUIPMENT_OWNER,
+        p.ITEM_NUMBER,
+        p.EQUIPMENT_DEPARTMENT,
+        p.CRITICAL_EQUIPMENT,
+        p.STOP_TIME,
+        p.TOTAL_PRICE,
+        p.MAIN_USES,
+        p.REMARK,
+        p.ASSET_TYPE,
+        p.DISMISS_REASON,
+        p.EQUIPMENT_NUMBER,
+        v.RETURN_PEOPLE,
+        v.RETURN_TIME,
+        v.RECIPIENT,
+        v.RECIPIENT_TIME
+        from V_ASSETS_RECEIVE_MAIN v  left join V_ASSETS_PARAMETER p on p.ID = v.ASSETS_ID where  1=1
+        and p.EQUIPMENT_DEPARTMENT is not null
+        and p.PRINCIPAL is not null
+        and  p.FACITITY_STATUS = '1' <!--在线状态-->
+        <if test="devicename != '' and devicename != null">
+            and  p.DEVICENAME  = #{devicename}
+        </if>
+        <if test="unifiedCode != '' and unifiedCode != null">
+            and  p.UNIFIED_CODE  = #{unifiedCode}
+        </if>
+        <if test="unitType != '' and unitType != null">
+            and  p.UNIT_TYPE  = #{unitType}
+        </if>
+        <if test="assetsClass != '' and assetsClass != null">
+            and  p.ASSETS_CLASS  = #{assetsClass}
+        </if>
+        <if test="facitityStatus != '' and facitityStatus != null">
+            and  p.FACITITY_STATUS  = #{facitityStatus}
+        </if>
+        <if test="equipmentOwner != '' and equipmentOwner != null">
+            and  p.EQUIPMENT_OWNER  = #{equipmentOwner}
+        </if>
+        <if test="principal != '' and principal != null ">
+            and  p.PRINCIPAL  = #{principal}
+        </if>
+        <if test="assetsType != '' and assetsType != null ">
+            and  v.ASSETS_STATUS  = #{assetsType}
+        </if>
+
+        <if test="crtUserId != '' and crtUserId != null ">
+            and  v.CRT_USER_ID  = #{crtUserId}
+        </if>
+        <if test="updUserId != '' and updUserId != null ">
+            and  v.UPD_USER_ID  = #{updUserId}
+        </if>
+
+        <if test="type != '' and type != null ">
+            and  v.TYPE  = #{type}
+        </if>
+        <if test="assetStatusList != null ">
+            and  p.ASSETS_STATUS
+            in
+            <foreach collection="assetStatusList" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+    </select>
+
+
+    <select id="selectConjunctiveRecord" parameterType="java.util.Map" resultMap="vAssetsChangeRecordsMap" >
+        select
+        v.ID,
+        v.ASSETS_STATUS,
+        v.ASSETS_ID,
+        p.UNIFIED_CODE,
+        p.DEVICENAME,
+        p.UNIT_TYPE,
+        p.MEASUREMENT_RANGE,
+        p.ORIGINAL_VALUE,
+        p.GRADE,
+        p.TAX_RATE,
+        p.AFTER_TAX_PRICE,
+        p.ASSETS_CLASS,
+        p.MEASUREMENT_CHECK_CLASS,
+        p.FACITITY_CATEGORY,
+        p.INSTALLED_CAPACITY,
+        p.DELIVERY_TIME,
+        p.USES_TIME,
+        p.FACITITY_STATUS,
+        p.FACILITY_DESIGNATED_AREA,
+        p.MANUFACTURER,
+        p.PRINCIPAL,
+        p.EQUIPMENT_SUBORDINATE,
+        p.EQUIPMENT_OWNER,
+        p.ITEM_NUMBER,
+        p.EQUIPMENT_DEPARTMENT,
+        p.CRITICAL_EQUIPMENT,
+        p.STOP_TIME,
+        p.TOTAL_PRICE,
+        p.MAIN_USES,
+        p.ASSET_TYPE,
+        p.DISMISS_REASON,
+        p.EQUIPMENT_NUMBER,
+        v.RETURN_PEOPLE,
+        v.RETURN_TIME,
+        v.RECIPIENT,
+        v.RECIPIENT_TIME,
+        v.UPD_USER_NAME,
+        v.UPD_USER_ID,
+        v.UPD_TIME,
+        v.REMARK
+        from V_ASSETS_RECEIVE_MAIN v  left join V_ASSETS_PARAMETER p on p.ID = v.ASSETS_ID where  1=1
+        and v.ASSETS_STATUS = p.ASSETS_STATUS
+        <if test="devicename != '' and devicename != null">
+            and  p.DEVICENAME  LIKE '%${devicename}%'
+        </if>
+        <if test="unifiedCode != '' and unifiedCode != null">
+            and  p.UNIFIED_CODE  LIKE  '%${unifiedCode}%'
+        </if>
+        <if test="unitType != '' and unitType != null">
+            and  p.UNIT_TYPE  = #{unitType}
+        </if>
+        <if test="assetsClass != '' and assetsClass != null">
+            and  p.ASSETS_CLASS  = #{assetsClass}
+        </if>
+        <if test="facitityStatus != '' and facitityStatus != null">
+            and  p.FACITITY_STATUS  = #{facitityStatus}
+        </if>
+        <if test="equipmentDepartment != '' and equipmentDepartment != null">
+            and  p.EQUIPMENT_DEPARTMENT  = #{equipmentDepartment}
+        </if>
+        <if test="principal != '' and principal != null ">
+            and  p.PRINCIPAL  = #{principal}
+        </if>
+        <if test="mainPrincipal != '' and mainPrincipal != null ">
+            and  p.PRINCIPAL is NULL
+        </if>
+        <if test="facilityDesignatedArea != '' and facilityDesignatedArea != null ">
+            and  p.FACILITY_DESIGNATED_AREA  = #{facilityDesignatedArea}
+        </if>
+        <if test="equipmentDepartment != '' and equipmentDepartment != null ">
+            and  p.EQUIPMENT_DEPARTMENT  = #{equipmentDepartment}
+        </if>
+        <if test="recipient != '' and recipient != null ">
+            and  v.RECIPIENT  = #{recipient}
+        </if>
+        <if test="assetsType != '' and assetsType != null ">
+            and  v.ASSETS_STATUS  = #{assetsType}
+        </if>
+        <if test="type != '' and type != null ">
+            and  v.TYPE  = #{type}
+        </if>
+        <if test="crtUserId != '' and crtUserId != null ">
+            and  v.CRT_USER_ID  = #{crtUserId}
+        </if>
+        <if test="assetStatusList != null ">
+            and  p.ASSETS_STATUS
+            in
+            <foreach collection="assetStatusList" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+    </select>
+
+    <select id="selectReceiveRecordAll" parameterType="java.util.Map" resultMap="vAssetsChangeRecordsMap" >
+        SELECT
+        P . ID,
+        P .UNIFIED_CODE,
+        P .DEVICENAME,
+        P .UNIT_TYPE,
+        P .MEASUREMENT_RANGE,
+        P .ORIGINAL_VALUE,
+        P .GRADE,
+        P .TAX_RATE,
+        P .AFTER_TAX_PRICE,
+        P .ASSETS_CLASS,
+        P .MEASUREMENT_CHECK_CLASS,
+        P .FACITITY_CATEGORY,
+        P .INSTALLED_CAPACITY,
+        P .DELIVERY_TIME,
+        P .USES_TIME,
+        P .FACITITY_STATUS,
+        P .FACILITY_DESIGNATED_AREA,
+        P .MANUFACTURER,
+        P .PRINCIPAL,
+        P .EQUIPMENT_SUBORDINATE,
+        P .EQUIPMENT_OWNER,
+        P .ITEM_NUMBER,
+        P .EQUIPMENT_DEPARTMENT,
+        P .CRITICAL_EQUIPMENT,
+        P .STOP_TIME,
+        P .TOTAL_PRICE,
+        P .MAIN_USES,
+        P .REMARK,
+        P .ASSET_TYPE,
+        P .DISMISS_REASON,
+        P .EQUIPMENT_NUMBER,
+        v.RETURN_PEOPLE,
+        v.RETURN_TIME,
+        v.RECIPIENT,
+        v.RECIPIENT_TIME,
+        v.CURRENT_STATUS,
+        v.CRT_USER_NAME,
+        v.CRT_TIME
+        FROM
+        V_ASSETS_RECEIVE_RECORDS v
+        LEFT JOIN V_ASSETS_PARAMETER P ON P . ID = v.ASSETS_ID
+        WHERE
+        1 = 1
+        <if test="facitityStatus != '' and facitityStatus != null">
+            and  p.FACITITY_STATUS  = #{facitityStatus}
+        </if>
+        <if test="devicename != '' and devicename != null">
+            and  p.DEVICENAME  = #{devicename}
+        </if>
+        <if test="unifiedCode != '' and unifiedCode != null">
+            and  p.UNIFIED_CODE  = #{unifiedCode}
+        </if>
+        <if test="unitType != '' and unitType != null">
+            and  p.UNIT_TYPE  = #{unitType}
+        </if>
+        <if test="assetsClass != '' and assetsClass != null">
+            and  p.ASSETS_CLASS  = #{assetsClass}
+        </if>
+        <if test="facitityStatus != '' and facitityStatus != null">
+            and  p.FACITITY_STATUS  = #{facitityStatus}
+        </if>
+        <if test="equipmentOwner != '' and equipmentOwner != null">
+            and  p.EQUIPMENT_OWNER  = #{equipmentOwner}
+        </if>
+        <if test="principal != '' and principal != null ">
+            and  p.PRINCIPAL  = #{principal}
+        </if>
+        <if test="recipient != '' and recipient != null ">
+            and  v.RECIPIENT  = #{recipient}
+        </if>
+        <if test="assetsType != '' and assetsType != null ">
+            and  v.ASSETS_STATUS  = #{assetsType}
+        </if>
+        <if test="type != '' and type != null ">
+            and  v.TYPE  = #{type}
+        </if>
+        <if test="crtUserId != '' and crtUserId != null ">
+            and  v.CRT_USER_ID  = #{crtUserId}
+        </if>
+        <if test="assetStatusList != null ">
+            and  p.ASSETS_STATUS
+            in
+            <foreach collection="assetStatusList" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        order by v.CRT_TIME desc
+    </select>
+
+
+    <select id="selectReceiveRecordAllLike" parameterType="java.util.Map" resultMap="vAssetsChangeRecordsMap" >
+        SELECT
+        P . ID,
+        P .UNIFIED_CODE,
+        P .DEVICENAME,
+        P .UNIT_TYPE,
+        P .MEASUREMENT_RANGE,
+        P .ORIGINAL_VALUE,
+        P .GRADE,
+        P .TAX_RATE,
+        P .AFTER_TAX_PRICE,
+        P .ASSETS_CLASS,
+        P .MEASUREMENT_CHECK_CLASS,
+        P .FACITITY_CATEGORY,
+        P .INSTALLED_CAPACITY,
+        P .DELIVERY_TIME,
+        P .USES_TIME,
+        P .FACITITY_STATUS,
+        P .FACILITY_DESIGNATED_AREA,
+        P .MANUFACTURER,
+        P .PRINCIPAL,
+        P .EQUIPMENT_SUBORDINATE,
+        P .EQUIPMENT_OWNER,
+        P .ITEM_NUMBER,
+        P .EQUIPMENT_DEPARTMENT,
+        P .CRITICAL_EQUIPMENT,
+        P .STOP_TIME,
+        P .TOTAL_PRICE,
+        P .MAIN_USES,
+        P .REMARK,
+        P .ASSET_TYPE,
+        P .DISMISS_REASON,
+        P .EQUIPMENT_NUMBER,
+        v.RETURN_PEOPLE,
+        v.RETURN_TIME,
+        v.RECIPIENT,
+        v.RECIPIENT_TIME,
+        v.CURRENT_STATUS,
+        v.CRT_USER_NAME,
+        v.CRT_TIME
+        FROM
+        V_ASSETS_RECEIVE_RECORDS v
+        LEFT JOIN V_ASSETS_PARAMETER P ON P . ID = v.ASSETS_ID
+        WHERE  1=1
+            and ( upper(p.DEVICENAME)  like upper(#{searchAll}) or lower(p.DEVICENAME)  like lower(#{searchAll}) or p.DEVICENAME  like #{searchAll}
+            or upper(p.UNIFIED_CODE)  like upper(#{searchAll}) or lower(p.UNIFIED_CODE)  like lower(#{searchAll}) or p.UNIFIED_CODE  like #{searchAll}
+            or upper(p.UNIT_TYPE)  like upper(#{searchAll}) or lower(p.UNIT_TYPE)  like lower(#{searchAll}) or p.UNIT_TYPE  like #{searchAll}
+            or upper(p.ASSETS_CLASS)  like upper(#{searchAll}) or lower(p.ASSETS_CLASS)  like lower(#{searchAll}) or p.ASSETS_CLASS  like #{searchAll}
+            )
+        order by CRT_TIME desc
+
+    </select>
+
+    <select id="selectVersion" parameterType="java.util.Map" resultType="Integer">
+        SELECT max(v."VERSION") from V_ASSETS_RECEIVE_RECORDS v
+        where 1=1
+        and v.ASSETS_ID = #{id}
+        and v.ASSETS_STATUS = #{assetsStatus}
+    </select>
+
+</mapper>

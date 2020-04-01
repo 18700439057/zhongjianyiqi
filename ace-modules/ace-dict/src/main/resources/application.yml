@@ -1,0 +1,47 @@
+logging:
+    level:
+#        tk.mybatis: DEBUG
+        com.github.wxiaoqi.security.dict: DEBUG
+server:
+    port: 9991
+
+spring:
+    profiles:
+        active: dev
+    application:
+        name: ace-dict
+    jackson:
+        date-format: yyyy-MM-dd HH:mm:ss
+        time-zone: GMT+8
+        default-property-inclusion: non_null
+
+    zipkin:
+        enabled: true
+    sleuth:
+        sampler:
+            percentage: 1
+    
+# 配置数据库
+mybatis:
+    mapper-locations: "classpath*:mapper/*.xml"
+
+# 配置swagger
+swagger:
+    enabled: true
+    base-package: com.github.wxiaoqi.security.dict
+    title: ace-dict
+    version: 1.0.0.SNAPSHOT
+    description: 数据字典服务
+    contact:
+        name: admin
+
+# 配置用户认证和服务认证信息
+auth:
+  serviceId: ace-auth
+  user:
+    token-header: Authorization
+    limit-expire: 1440 # 一天过去,单位分钟
+  client:
+    id: ace-dict
+    secret: 123566
+    token-header: client-token

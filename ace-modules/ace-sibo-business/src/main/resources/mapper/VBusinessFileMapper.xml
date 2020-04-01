@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sibo.business.mapper.VBusinessFileMapper">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.sibo.business.entity.VBusinessFile" id="vBusinessFileMap">
+        <result property="id" column="ID"/>
+        <result property="fileName" column="FILE_NAME"/>
+        <result property="filePath" column="FILE_PATH"/>
+        <result property="bussinessId" column="BUSSINESS_ID"/>
+        <result property="crtUserName" column="CRT_USER_NAME"/>
+        <result property="crtTime" column="CRT_TIME"/>
+        <result property="updUserName" column="UPD_USER_NAME"/>
+        <result property="updUserId" column="UPD_USER_ID"/>
+        <result property="updTime" column="UPD_TIME"/>
+        <result property="type" column="TYPE"/>
+    </resultMap>
+
+    <select id="selectFileAll" parameterType="java.util.Map" resultMap="vBusinessFileMap" >
+        select
+            f.ID,
+            f.FILE_NAME,
+            f.FILE_PATH,
+            f.BUSSINESS_ID,
+            f.CRT_USER_NAME,
+            f.CRT_USER_ID,
+            f.CRT_TIME,
+            f.UPD_USER_NAME,
+            f.UPD_USER_ID,
+            f.UPD_TIME,
+            f.TYPE
+        from v_business_file f
+        where 1=1
+        <if test="crtTimeStartTime != null and crtTimeStartTime != ''">
+            and to_char(f.CRT_TIME, 'yyyy') = #{crtTimeStartTime}
+        </if>
+        <if test="type != null and type != ''">
+            and f.TYPE = #{type}
+        </if>
+        <if test="order != null and order != ''">
+            ORDER BY #{order} asc
+        </if>
+
+    </select>
+
+</mapper>

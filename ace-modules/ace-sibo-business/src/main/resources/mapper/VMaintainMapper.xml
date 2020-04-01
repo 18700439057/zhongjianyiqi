@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sibo.business.mapper.VMaintainMapper">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.sibo.business.vo.VMaintainVo" id="vMaintainMap">
+        <result property="id" column="ID"/>
+        <result property="assetId" column="ASSET_ID"/>
+        <result property="devicename" column="DEVICENAME"/>
+        <result property="errorDescription" column="ERROR_DESCRIPTION"/>
+        <result property="crtUserName" column="CRT_USER_NAME"/>
+        <result property="crtUserId" column="CRT_USER_ID"/>
+        <result property="crtTime" column="CRT_TIME"/>
+        <result property="updUserName" column="UPD_USER_NAME"/>
+        <result property="updUserId" column="UPD_USER_ID"/>
+        <result property="updTime" column="UPD_TIME"/>
+        <result property="version" column="VERSION"/>
+        <result property="proposer" column="PROPOSER"/>
+        <result property="applicationTime" column="APPLICATION_TIME"/>
+        <result property="status" column="STATUS"/>
+        <result property="department" column="DEPARTMENT"/>
+        <result property="waiterUseTime" column="WAITER_USE_TIME"/>
+        <result property="waiterTime" column="WAITER_TIME"/>
+        <result property="faultTitle" column="FAULT_TITLE"/>
+        <result property="errorDescriptionConfirm" column="ERROR_DESCRIPTION_CONFIRM"/>
+        <result property="waiterDescription" column="WAITER_DESCRIPTION"/>
+        <result property="changeAccessory" column="CHANGE_ACCESSORY"/>
+        <result property="costEstimate" column="COST_ESTIMATE"/>
+        <result property="reject" column="REJECT"/>
+        <result property="maintainClassfiy" column="MAINTAIN_CLASSFIY"/>
+    </resultMap>
+
+    <select id="selectMaintain" parameterType="java.util.Map" resultMap="vMaintainMap" >
+        SELECT
+            P .DEVICENAME,
+            v. ID,
+            v.ASSET_ID,
+            v.ERROR_DESCRIPTION,
+            v.CRT_USER_NAME,
+            v.CRT_USER_ID,
+            v.CRT_TIME,
+            v.UPD_USER_NAME,
+            v.UPD_USER_ID,
+            v.UPD_TIME,
+            v. VERSION,
+            v.PROPOSER,
+            v.APPLICATION_TIME,
+            v.STATUS,
+            v.DEPARTMENT,
+            v.WAITER_USE_TIME,
+            v.WAITER_TIME,
+            v.FAULT_TITLE,
+            v.ERROR_DESCRIPTION_CONFIRM,
+            v.WAITER_DESCRIPTION,
+            v.CHANGE_ACCESSORY,
+            v.COST_ESTIMATE,
+            v. REJECT,
+            v.MAINTAIN_CLASSFIY
+        FROM
+            V_MAINTAIN v
+        LEFT JOIN V_ASSETS_PARAMETER P ON P . ID = v.ASSET_ID
+        WHERE
+            1 = 1
+        <if test="proposer != '' and proposer != null">
+            and  v.PROPOSER  = #{proposer}
+        </if>
+        <if test="department != '' and department != null">
+            and  v.DEPARTMENT  = #{department}
+        </if>
+        <if test="crtUserId != '' and crtUserId != null">
+            and  v.CRT_USER_ID  = #{crtUserId}
+        </if>
+        <if test="updUserId != '' and updUserId != null">
+            and  v.UPD_USER_ID  = #{updUserId}
+        </if>
+        <if test="maintainConfirmPerson != '' and maintainConfirmPerson != null">
+            and  v.MAINTAIN_CONFIRM_PERSON  = #{maintainConfirmPerson}
+        </if>
+        <if test="proposerConfirm != '' and proposerConfirm != null">
+            and  v.PROPOSER_CONFIRM  = #{proposerConfirm}
+        </if>
+        <if test="errorDescription != '' and errorDescription != null">
+            and  v.ERROR_DESCRIPTION  = #{errorDescription}
+        </if>
+        <if test="devicename != '' and devicename != null">
+            and  P .DEVICENAME  = #{devicename}
+        </if>
+        <if test="status != '' and status != null">
+            and  v.STATUS  = #{status}
+        </if>
+        <if test="applicationStartTime != null and applicationStartTime != ''">
+            and v.APPLICATION_TIME &gt;= TO_date(#{applicationStartTime}, 'yyyy-mm-dd')
+        </if>
+        <if test="applicationEndTime != null and applicationEndTime != ''">
+            and v.APPLICATION_TIME &lt;= TO_date(#{applicationEndTime}, 'yyyy-mm-dd')
+        </if>
+        <if test="waiterStartTime != null and waiterStartTime != ''">
+            and v.WAITER_TIME &gt;= TO_date(#{waiterStartTime}, 'yyyy-mm-dd')
+        </if>
+        <if test="waiterEndTime != null and waiterEndTime != ''">
+            and v.WAITER_TIME &lt;= TO_date(#{waiterEndTime}, 'yyyy-mm-dd')
+        </if>
+        <!--待办工作查询条件-->
+        <if test="waitStatusList != null">
+            and  v.STATUS
+            in
+            <foreach collection="waitStatusList" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <!--已办工作查询条件-->
+        <if test="finishStatusList != null">
+            and  v.STATUS
+            not in
+            <foreach collection="finishStatusList" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+    </select>
+
+</mapper>

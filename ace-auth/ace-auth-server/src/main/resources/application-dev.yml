@@ -1,0 +1,41 @@
+spring:
+    datasource:
+      name: test
+#      url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/ag_auth?useUnicode=true&characterEncoding=UTF8
+#      username: root
+#      password: ROOT
+#      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:oracle:thin:@10.10.10.10:1521:orcl
+      username: LIMS_APPARA
+      password: LIMS_APPARA
+      driver-class-name: oracle.jdbc.OracleDriver
+      # 使用druid数据源
+      type: com.alibaba.druid.pool.DruidDataSource
+      filters: stat
+      maxActive: 20
+      initialSize: 1
+      maxWait: 60000
+      minIdle: 1
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: select 'x'
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      poolPreparedStatements: true
+      maxOpenPreparedStatements: 20
+
+
+eureka:
+    instance:
+        statusPageUrlPath: /info
+        healthCheckUrlPath: /health
+        # docker 部署开启,记得将IP修改为部署所在服务器的外网IP
+        prefer-ip-address: true
+        ip-address: 10.10.10.202
+        leaseRenewalIntervalInSeconds: 5
+    client:
+        serviceUrl:
+            defaultZone: http://10.10.10.249:8761/eureka/
+                    # docker 部署开启,记得将IP修改为部署所在服务器的外网IP
+#            defaultZone: http://${EUREKA_HOST:localhost}:${EUREKA_PORT:8761}/eureka/

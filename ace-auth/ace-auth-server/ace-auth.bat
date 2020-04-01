@@ -1,0 +1,1 @@
+java -jar F:\springCloud\framework\ace-auth\ace-auth-server\target\ace-auth.jar

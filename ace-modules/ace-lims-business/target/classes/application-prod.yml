@@ -1,0 +1,93 @@
+
+spring:
+    application:
+        name: ace-lims-business
+    jackson:
+        date-format: yyyy-MM-dd HH:mm:ss
+        time-zone: GMT+8
+        default-property-inclusion: non_null
+    datasource:
+        name: test
+        url: jdbc:oracle:thin:@localhost:1521:orcl
+        username: lab1702
+        password: lab1702
+        # 使用druid数据源
+        type: com.alibaba.druid.pool.DruidDataSource
+        #driver-class-name: com.mysql.jdbc.Driver
+        driver-class-name: oracle.jdbc.OracleDriver
+        druid:
+            filters: stat
+            maxActive: 20
+            initialSize: 1
+            maxWait: 60000
+            minIdle: 1
+            timeBetweenEvictionRunsMillis: 60000
+            minEvictableIdleTimeMillis: 300000
+            validationQuery: select 1 from dual
+            testWhileIdle: true
+            testOnBorrow: false
+            testOnReturn: false
+            poolPreparedStatements: true
+            maxOpenPreparedStatements: 20
+    redis:
+        database: 1
+        host: ${REDIS_HOST:192.168.0.9}
+        port: ${REDIS_PORT:6379}
+        pool:
+            max-active: 20
+
+logging:
+    config: classpath:logback-boot.xml
+
+eureka:
+    instance:
+        statusPageUrlPath: /info
+        healthCheckUrlPath: /health
+        # docker 部署开启,记得将IP修改为部署所在服务器的外网IP
+        prefer-ip-address: true
+        ip-address: 192.168.0.246
+    client:
+        serviceUrl:
+            defaultZone: http://192.168.0.9:8761/eureka/
+                    # docker 部署开启,记得将IP修改为部署所在服务器的外网IP
+#            defaultZone: http://${EUREKA_HOST:localhost}:${EUREKA_PORT:8761}/eureka/
+
+#请求和响应GZIP压缩支持
+feign:
+  httpclient:
+    enabled: false
+  okhttp:
+    enabled: true
+  compression:
+    request:
+      enabled: true
+      mime-types: text/xml,application/xml,application/json
+      min-request-size: 2048
+    response:
+      enabled: true
+
+
+
+ribbon:
+  eureka:
+    enabled: true
+  ReadTimeout: 120000
+  ConnectTimeout: 120000
+  MaxAutoRetries: 0
+  MaxAutoRetriesNextServer: 0
+  OkToRetryOnAllOperations: false
+  NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
+
+
+hystrix:
+  threadpool:
+    default:
+            coreSize: 10000
+            maxQueueSize: 10000
+            queueSizeRejectionThreshold: 500
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 50000

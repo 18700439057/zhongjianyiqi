@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sibo.lims.business.mapper.VSysAccountMapper">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.sibo.lims.business.entity.VSysAccount" id="vSysAccountMap">
+        <result property="id" column="ID"/>
+        <result property="dep" column="DEP"/>
+        <result property="loginName" column="LOGIN_NAME"/>
+        <result property="password" column="PASSWORD"/>
+        <result property="signature" column="SIGNATURE"/>
+        <result property="status" column="STATUS"/>
+        <result property="orgId" column="ORG_ID"/>
+        <result property="userId" column="USER_ID"/>
+        <result property="handleType" column="HANDLE_TYPE"/>
+        <result property="deviceId" column="DEVICE_ID"/>
+        <result property="ifOnline" column="IF_ONLINE"/>
+        <result property="createTime" column="CREATE_TIME"/>
+        <result property="isDel" column="IS_DEL"/>
+        <result property="lastUpdTime" column="LAST_UPD_TIME"/>
+        <result property="sort" column="SORT"/>
+        <result property="version" column="VERSION"/>
+    </resultMap>
+
+</mapper>

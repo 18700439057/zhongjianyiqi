@@ -1,0 +1,115 @@
+#logging:
+#    level:
+##        tk.mybatis: DEBUG
+#        com.sibo.business: DEBUG
+
+
+server:
+    port: 8083
+
+file:
+    downPath: D:/ems/downFile/
+    templetePath: D:\\ems\\templete\\
+
+filePath: D:/ems/plan/
+
+spring:
+    profiles:
+        active: prod
+    mvc:
+        date-format: yyyy-MM-dd
+    application:
+        name: ace-sibo-business
+    jackson:
+        date-format: yyyy-MM-dd HH:mm:ss
+        time-zone: GMT+8
+        default-property-inclusion: non_null
+    zipkin:
+        enabled: true
+    sleuth:
+        sampler:
+            percentage: 1
+    
+# 配置数据库
+mybatis:
+    mapper-locations: "classpath*:mapper/*.xml"
+
+# 配置swagger
+swagger:
+    enabled: true
+    base-package: com.sibo.business
+    title: ace-sibo-business
+    version: 1.0.0.SNAPSHOT
+    description: 业务服务
+    contact:
+        name: admin
+
+# 配置用户认证和服务认证信息
+auth:
+  serviceId: ace-auth
+  user:
+    token-header: Authorization
+    limit-expire: 1440 # 一天过去,单位分钟
+  client:
+    id: ace-sibo-business
+    secret: 123456
+    token-header: client-token
+
+merge:
+  enabled: true
+  guavaCacheNumMaxSize: 1000
+  guavaCacheRefreshWriteTime: 10 # min
+  guavaCacheRefreshThreadPoolSize: 10
+  aop:
+    enabled: true
+    
+mapper:
+  mappers: com.github.wxiaoqi.security.common.mapper.CommonMapper
+
+
+
+
+#请求和响应GZIP压缩支持
+feign:
+  httpclient:
+    enabled: false
+  okhttp:
+    enabled: true
+  compression:
+    request:
+      enabled: true
+      mime-types: text/xml,application/xml,application/json
+      min-request-size: 2048
+    response:
+      enabled: true
+
+
+
+ribbon:
+  eureka:
+    enabled: true
+  ReadTimeout: 120000
+  ConnectTimeout: 120000
+  MaxAutoRetries: 0
+  MaxAutoRetriesNextServer: 0
+  OkToRetryOnAllOperations: false
+  NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
+
+
+hystrix:
+  threadpool:
+    default:
+            coreSize: 1000
+            maxQueueSize: 1000
+            queueSizeRejectionThreshold: 500
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 50000
+          strategy: SEMAPHORE
+# txmanager地址
+tm:
+  manager:
+    url: http://127.0.0.1:8899/tx/manager/

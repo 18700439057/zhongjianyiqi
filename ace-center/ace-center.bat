@@ -1,0 +1,1 @@
+java -jar F:\springCloud\framework\ace-center\target\ace-center.jar
