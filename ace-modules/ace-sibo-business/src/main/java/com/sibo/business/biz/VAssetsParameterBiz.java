@@ -921,8 +921,9 @@ public class VAssetsParameterBiz extends BusinessBiz<VAssetsParameterMapper,VAss
         if(StringUtils.isNotEmpty(queryFormArr.getString("dataManager"))){
             criteria.andEqualTo("dataManager",queryFormArr.getString("dataManager"));
         }
-        if(StringUtils.isNotEmpty(queryFormArr.getString("useTime"))){
-            criteria.andEqualTo("useTime",queryFormArr.getString("useTime"));
+        if(StringUtils.isNotEmpty(queryFormArr.getString("useTimeStart")) && StringUtils.isNotEmpty(queryFormArr.getString("useTimeEnd"))){
+            //criteria.andEqualTo("useTime",queryFormArr.getString("useTime"));
+            criteria.andCondition(" USES_TIME >= to_date('"+queryFormArr.getString("useTimeStart")+"','yyyy-mm-dd') and USES_TIME <= to_date( '"+queryFormArr.getString("useTimeEnd")+"','yyyy-mm-dd')");
         }
 
 
