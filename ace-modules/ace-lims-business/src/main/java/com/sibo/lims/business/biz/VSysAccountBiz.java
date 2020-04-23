@@ -38,6 +38,7 @@ public class VSysAccountBiz extends BusinessBiz<VSysAccountMapper,VSysAccount> {
 
     public void queryAccount(){
         Example example = new Example(VSysAccount.class);
+		example.createCriteria().andEqualTo("isDel",0);
 //        example.createCriteria().andNotEqualTo("orgId","40288076691f16a9016927b284c41941");
         List<VSysAccount> listAccount = super.selectByExample(example);
         adminFeign.saveUserAndDept(listAccount);
